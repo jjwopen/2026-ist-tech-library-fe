@@ -55,10 +55,15 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            // 패키지명을 정확히 매칭해야 react-i18next 등이 섞여 청크 간 순환 참조가 생기지 않음
+            if (
+              /[\\/]node_modules[\\/](react|react-dom|scheduler|use-sync-external-store)[\\/]/.test(
+                id,
+              )
+            ) {
               return 'vendor-react';
             }
-            if (id.includes('@tanstack')) {
+            if (/[\\/]node_modules[\\/]@tanstack[\\/]/.test(id)) {
               return 'vendor-tanstack';
             }
           },
