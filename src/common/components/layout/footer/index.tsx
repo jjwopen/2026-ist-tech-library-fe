@@ -11,8 +11,8 @@ export function Footer({ selected }: Footer.Props) {
   const { t } = useTranslation('common');
 
   const tabs = [
-    { key: 'search', to: '/', icon: ICONS.search.src, label: t('search') },
-    { key: 'map', to: '/floor', icon: ICONS.map.src, label: t('map') },
+    { key: 'search', to: '/', icon: ICONS.search, label: t('search') },
+    { key: 'map', to: '/floor', icon: ICONS.map, label: t('map') },
   ] as const;
 
   return (

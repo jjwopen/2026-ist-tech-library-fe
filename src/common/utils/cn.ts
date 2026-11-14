@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
 // styles.css에 정의한 커스텀 텍스트 사이즈를 색상 클래스와 구분하기 위해 등록
+// `--text-*` 토큰을 추가·삭제하면 이 목록도 함께 수정해야 함
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {

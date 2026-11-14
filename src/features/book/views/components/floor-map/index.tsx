@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FLOOR_PLAN_ASSETS } from '@/common/assets';
 import { cn } from '@/common/utils';
 
-import { type FloorMarker, type FloorPlan } from '../../../viewmodels';
+import { type FloorMarker, type FloorPlan, type FloorTarget } from '../../../viewmodels';
 
 const COLUMN_TOP = 96;
 const COLUMN_WIDTH = 12;
@@ -26,7 +26,6 @@ const START = { x: 115, y: 326 };
 /** 층 평면도 (Figma `평면도 3F`) — 350 × 380 좌표계를 비율로 늘려 그림 */
 export function FloorMap({
   plan,
-  highlightColumn,
   target,
   sameShelfCount = 0,
   recMarkers = [],
@@ -80,7 +79,7 @@ export function FloorMap({
 
         {/* 서가 열 */}
         {plan.columns.map((column) => {
-          const active = column.no === highlightColumn;
+          const active = column.no === target?.column;
           return (
             <div key={column.no}>
               <Box
@@ -154,10 +153,7 @@ export function FloorMap({
             {sameShelfCount > 0 && (
               <RecBadge style={at(target.x + 14, target.y - 11)}>+{sameShelfCount}</RecBadge>
             )}
-            <Box
-              at={at(target.x + 16, target.y + 8)}
-              className="font-num text-meta text-accent font-bold tracking-[0.02em]"
-            >
+            <Box at={at(target.x + 16, target.y + 8)} className="num text-accent">
               {target.shelf}
             </Box>
           </>
@@ -228,7 +224,7 @@ function RecBadge({ style, children }: { style: CSSProperties; children: ReactNo
   return (
     <span
       style={style}
-      className="bg-rec font-num text-meta absolute flex h-4 min-w-4 items-center justify-center px-0.5 font-bold tracking-[0.02em] text-white"
+      className="bg-rec num text-print-paper absolute flex h-4 min-w-4 items-center justify-center px-0.5"
     >
       {children}
     </span>
@@ -238,10 +234,8 @@ function RecBadge({ style, children }: { style: CSSProperties; children: ReactNo
 export namespace FloorMap {
   export type Props = {
     plan: FloorPlan;
-    /** 강조할 서가 열 번호 */
-    highlightColumn?: number;
-    /** 찾는 책이 있는 서가의 평면도 좌표 */
-    target?: { x: number; y: number; shelf: number };
+    /** 찾는 책이 있는 서가 (해당 열 강조 + 위치 표시) */
+    target?: FloorTarget;
     /** 찾는 책과 같은 서가에 있는 추천 책 수 */
     sameShelfCount?: number;
     recMarkers?: FloorMarker[];

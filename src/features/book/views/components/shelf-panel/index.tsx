@@ -1,14 +1,13 @@
-import { Fragment } from 'react';
-
 import { Link } from '@tanstack/react-router';
 
 import { useTranslation } from 'react-i18next';
 
-import { Button, buttonClass, StatusMark, Tag } from '@/common/components/ui';
+import { Button, buttonClass, Tag } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
 import { type Recommendation, type ShelfView } from '../../../viewmodels';
 import { useBookLabels } from '../../hooks';
+import { LoanStatusMark } from '../loan-status-mark';
 
 /** 서가 정면 하단 패널 — 기본은 찾는 책, 추천 책을 누르면 추천 정보 */
 export function ShelfPanel({ shelf, selected, onClearSelection, className }: ShelfPanel.Props) {
@@ -22,14 +21,11 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
         <>
           <div className="flex items-center justify-between">
             <Tag variant="rec">
-              {t('shelf.recTag', {
-                rank: String(selected.rank),
-                kind: labels.recKind(selected.kind),
-              })}
+              {t('shelf.recTag', { rank: selected.rank, kind: labels.recKind(selected.kind) })}
             </Tag>
             {selected.book.location.slot && (
               <span className="text-meta text-rec font-bold">
-                {t('shelf.slot', { slot: String(selected.book.location.slot) })}
+                {t('shelf.slot', { slot: selected.book.location.slot })}
               </span>
             )}
           </div>
@@ -54,26 +50,21 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
         <>
           <div className="flex items-center justify-between">
             <Tag variant="accent">{t('tag.target')}</Tag>
-            <StatusMark label={labels.loan(target.loan)} active={target.loan.available} />
+            <LoanStatusMark loan={target.loan} />
           </div>
           <h2 className="text-h2">{target.title}</h2>
           <p className="text-meta text-sub">
             {target.authors} · {target.callNumber}
           </p>
-          {neighbors.prev && neighbors.next && (
-            <div className="text-meta text-sub flex flex-wrap items-center gap-1.5">
-              <span>{t('shelf.callOrder')}</span>
-              {[neighbors.prev, null, neighbors.next].map((callNumber, index) => (
-                <Fragment key={index}>
-                  {index > 0 && <span aria-hidden>→</span>}
-                  {callNumber ? (
-                    <Tag>{callNumber}</Tag>
-                  ) : (
-                    <Tag variant="accent">{t('shelf.thisBook')}</Tag>
-                  )}
-                </Fragment>
-              ))}
-            </div>
+          {neighbors && (
+            <p className="text-meta text-sub flex flex-wrap items-center gap-1.5">
+              {t('shelf.callOrder')}
+              <Tag>{neighbors.prev}</Tag>
+              <span aria-hidden>→</span>
+              <Tag variant="accent">{t('shelf.thisBook')}</Tag>
+              <span aria-hidden>→</span>
+              <Tag>{neighbors.next}</Tag>
+            </p>
           )}
         </>
       )}

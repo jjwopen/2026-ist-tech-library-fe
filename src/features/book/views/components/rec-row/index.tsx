@@ -1,27 +1,21 @@
-import { Link } from '@tanstack/react-router';
-
-import { useTranslation } from 'react-i18next';
-
 import { ICONS } from '@/common/assets';
-import { buttonClass, SvgIcon, Tag } from '@/common/components/ui';
+import { SvgIcon, Tag } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
 import { type Recommendation } from '../../../viewmodels';
 import { useBookLabels } from '../../hooks';
 import { BookCoverArt } from '../book-cover-art';
 import { MiniShelf } from '../mini-shelf';
+import { ViewLocationLink } from '../view-location-link';
 
 /** 추천 목록 한 줄 (Figma RecRow) */
 export function RecRow({ recommendation, className }: RecRow.Props) {
-  const { t } = useTranslation('book');
   const labels = useBookLabels();
   const { rank, kind, reason, where, book } = recommendation;
 
   return (
     <article className={cn('border-ink flex items-start gap-3.5 border-t py-4', className)}>
-      <span className="font-num text-rec w-10 shrink-0 text-[28px]/7 font-bold tracking-[-0.02em]">
-        {String(rank).padStart(2, '0')}
-      </span>
+      <span className="num-lg text-rec w-10 shrink-0">{labels.index(rank)}</span>
       <BookCoverArt title={book.title} color={book.coverColor} />
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-start gap-2">
@@ -37,17 +31,11 @@ export function RecRow({ recommendation, className }: RecRow.Props) {
             {where.type === 'same-shelf' ? (
               <MiniShelf slot={where.slot} />
             ) : (
-              <SvgIcon src={ICONS.pinSmall.src} size={16} />
+              <SvgIcon src={ICONS.pinSmall} size={16} />
             )}
             {labels.recWhere(where)}
           </span>
-          <Link
-            to="/floor"
-            search={{ floor: book.location.floor, bookId: book.id }}
-            className={buttonClass({ variant: 'text' })}
-          >
-            {t('action.viewLocation')}
-          </Link>
+          <ViewLocationLink book={book} />
         </div>
       </div>
     </article>

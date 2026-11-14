@@ -6,6 +6,7 @@ import { PageShell, TopBar } from '@/common/components/layout';
 import { buttonClass } from '@/common/components/ui';
 
 import { useShelfView } from '../../viewmodels';
+import { EmptyState } from '../components/empty-state';
 import { ShelfFront } from '../components/shelf-front';
 import { ShelfPanel } from '../components/shelf-panel';
 import { useBookLabels } from '../hooks';
@@ -14,13 +15,13 @@ import { useBookLabels } from '../hooks';
 export function ShelfPage({ bookId }: ShelfPage.Props) {
   const { t } = useTranslation('book');
   const labels = useBookLabels();
-  const { shelf, selected, select, clearSelection } = useShelfView(bookId);
+  const { shelf, recommendations, selected, select, clearSelection } = useShelfView(bookId);
 
   if (!shelf) {
     return (
       <PageShell>
         <TopBar />
-        <p className="text-body-lg text-sub py-24 text-center">{t('shelf.notReady')}</p>
+        <EmptyState className="border-t-0">{t('shelf.notReady')}</EmptyState>
       </PageShell>
     );
   }
@@ -31,18 +32,18 @@ export function ShelfPage({ bookId }: ShelfPage.Props) {
     <PageShell className="pb-4">
       <TopBar
         trailing={
-          shelf.recommendations.length > 0 && (
+          recommendations.length > 0 && (
             <Link
               to="/books/$bookId/recommendations"
               params={{ bookId }}
               className={buttonClass({ variant: 'rec-outline' })}
             >
-              {t('shelf.recCount', { n: String(shelf.recommendations.length) })}
+              {t('shelf.recCount', { n: recommendations.length })}
             </Link>
           )
         }
       >
-        <span className="font-num text-[28px]/7 font-bold tracking-[-0.02em]">{shelf.shelf}</span>
+        <span className="num-lg">{shelf.shelf}</span>
         <span className="text-subtitle truncate">
           {t('shelf.titleSuffix', { side: labels.side(shelf.side) })}
         </span>
@@ -51,7 +52,7 @@ export function ShelfPage({ bookId }: ShelfPage.Props) {
       {location.slot && (
         <p className="flex items-end gap-2.5 pt-5 pb-4">
           <span className="text-display-sm text-accent">
-            {t('shelf.slot', { slot: String(location.slot) })}
+            {t('shelf.slot', { slot: location.slot })}
           </span>
           <span className="text-h2">{labels.position(location.position)}</span>
         </p>

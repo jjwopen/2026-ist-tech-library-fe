@@ -11,6 +11,5 @@ export const Route = createFileRoute('/_user/search')({
 
 function RouteComponent() {
   const { q = '' } = Route.useSearch();
-  // 검색어가 바뀌면 입력창 상태를 새로 시작
-  return <SearchPage key={q} query={q} />;
+  return <SearchPage query={q} />;
 }

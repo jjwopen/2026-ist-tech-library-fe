@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PageShell, TopBar } from '@/common/components/layout';
 
 import { useRecommendations } from '../../viewmodels';
+import { EmptyState } from '../components/empty-state';
 import { RecRow } from '../components/rec-row';
 
 /** S5 추천 */
@@ -26,9 +27,7 @@ export function RecommendationPage({ bookId }: RecommendationPage.Props) {
           <RecRow key={recommendation.rank} recommendation={recommendation} />
         ))
       ) : (
-        <p className="border-ink text-body-lg text-sub border-t py-24 text-center">
-          {t('recommendation.empty')}
-        </p>
+        <EmptyState>{t('recommendation.empty')}</EmptyState>
       )}
     </PageShell>
   );

@@ -10,7 +10,7 @@ export {
   type ShelfSpine,
   type ShelfView,
 } from '../models';
-export { useFloorPlan, type FloorMarker } from './use-floor-plan';
+export { useFloorPlan, useFloorTarget, type FloorMarker, type FloorTarget } from './use-floor-plan';
 export { useHomeBooks } from './use-home-books';
 export { useRecommendations } from './use-recommendations';
 export { useSearchBooks } from './use-search-books';

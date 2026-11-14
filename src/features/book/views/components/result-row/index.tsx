@@ -1,25 +1,20 @@
-import { Link } from '@tanstack/react-router';
-
-import { useTranslation } from 'react-i18next';
-
 import { ICONS } from '@/common/assets';
-import { buttonClass, StatusMark, SvgIcon, Tag } from '@/common/components/ui';
+import { SvgIcon, Tag } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
 import { type Book } from '../../../viewmodels';
 import { useBookLabels } from '../../hooks';
 import { BookCoverArt } from '../book-cover-art';
+import { LoanStatusMark } from '../loan-status-mark';
+import { ViewLocationLink } from '../view-location-link';
 
 /** 검색 결과 한 줄 (Figma ResultRow) */
 export function ResultRow({ index, book, className }: ResultRow.Props) {
-  const { t } = useTranslation('book');
   const labels = useBookLabels();
 
   return (
     <article className={cn('border-ink flex items-start gap-3 border-t py-3.5', className)}>
-      <span className="font-num text-meta shrink-0 font-bold tracking-[0.02em]">
-        {String(index).padStart(2, '0')}
-      </span>
+      <span className="num shrink-0">{labels.index(index)}</span>
       <BookCoverArt title={book.title} color={book.coverColor} />
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex flex-col gap-0.5">
@@ -29,23 +24,15 @@ export function ResultRow({ index, book, className }: ResultRow.Props) {
           </p>
         </div>
         <p className="text-small flex items-center gap-1.5">
-          <SvgIcon src={ICONS.pin.src} size={16} />
+          <SvgIcon src={ICONS.pin} size={16} />
           {labels.location(book.location)}
         </p>
         <div className="flex min-h-11 items-center justify-between">
           <div className="flex items-center gap-2">
-            <StatusMark label={labels.loan(book.loan)} active={book.loan.available} />
+            <LoanStatusMark loan={book.loan} />
             {book.level && <Tag>{labels.level(book.level)}</Tag>}
           </div>
-          {book.loan.available && (
-            <Link
-              to="/floor"
-              search={{ floor: book.location.floor, bookId: book.id }}
-              className={buttonClass({ variant: 'text' })}
-            >
-              {t('action.viewLocation')}
-            </Link>
-          )}
+          {book.loan.available && <ViewLocationLink book={book} />}
         </div>
       </div>
     </article>

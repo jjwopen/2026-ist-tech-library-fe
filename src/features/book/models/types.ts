@@ -26,7 +26,6 @@ export type Book = {
   title: string;
   authors: string;
   callNumber: string;
-  year: number;
   /** 표지 대표색 */
   coverColor: string;
   level?: BookLevel;
@@ -73,7 +72,7 @@ export type FloorPlan = {
   columns: FloorPlanColumn[];
   /** 서가 번호 → 평면도 위 중심 좌표 */
   shelves: Record<number, { column: number; x: number; y: number }>;
-  /** 출발점에서 해당 서가까지의 경로가 그려진 서가 */
+  /** 출발점에서 해당 서가까지의 경로 그림이 있는 서가 */
   routedShelves: number[];
 };
 
@@ -98,10 +97,9 @@ export type ShelfView = {
   shelf: number;
   side: 'front' | 'back';
   rows: ShelfSpine[][];
-  /** 찾는 책이 꽂혀 있을 가능성 구간 (칸 내부 x 오프셋 px) */
-  heat: { slot: number; offset: number; segments: { width: number; level: HeatLevel }[] };
+  /** 찾는 책이 꽂혀 있을 가능성 구간 — 찾는 책 칸 안의 x 오프셋(px)부터 */
+  heat: { offset: number; segments: { width: number; level: HeatLevel }[] };
   target: Book;
   /** 청구기호 순서상 앞·뒤 책 */
-  neighbors: { prev: string; next: string };
-  recommendations: Recommendation[];
+  neighbors?: { prev: string; next: string };
 };
