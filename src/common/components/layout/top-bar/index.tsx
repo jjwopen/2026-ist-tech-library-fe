@@ -9,13 +9,12 @@ import { SvgIcon } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
 /** 뒤로 가기 + 화면 제목/검색창을 담는 상단 바 (높이 64) */
-export function TopBar({ children, trailing, bordered = true, onBack, className }: TopBar.Props) {
+export function TopBar({ children, trailing, bordered = true, className }: TopBar.Props) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const canGoBack = useCanGoBack();
 
   const handleBack = () => {
-    if (onBack) return onBack();
     if (canGoBack) return router.history.back();
     router.navigate({ to: '/' });
   };
@@ -34,7 +33,7 @@ export function TopBar({ children, trailing, bordered = true, onBack, className 
         aria-label={t('back')}
         className="text-ink flex size-11 shrink-0 items-center"
       >
-        <SvgIcon src={ICONS.back.src} size={22} />
+        <SvgIcon src={ICONS.back} size={22} />
       </button>
       <div className="flex min-w-0 flex-1 items-center gap-2">{children}</div>
       {trailing}
@@ -49,7 +48,6 @@ export namespace TopBar {
     trailing?: ReactNode;
     /** 하단 구분선 표시 여부 */
     bordered?: boolean;
-    onBack?: () => void;
     className?: string;
   };
 }

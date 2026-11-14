@@ -5,8 +5,7 @@ import {
   NEW_ARRIVALS,
   POPULAR_IDS,
   RECOMMENDATIONS,
-  SHELF_27_HEAT,
-  SHELF_27_ROWS,
+  SHELF_FRONTS,
 } from './mock-data';
 import {
   type Book,
@@ -64,19 +63,18 @@ export const bookApi = {
 
   getFloorPlan: (floor: FloorId): Promise<FloorPlan | null> => respond(FLOOR_PLANS[floor] ?? null),
 
-  /** 현재는 27번 서가 앞면만 정면 데이터가 있음 */
-  getShelfView: async (bookId: string): Promise<ShelfView | null> => {
+  /** 정면 배치 데이터가 없는 서가면 null */
+  getShelfView: (bookId: string): Promise<ShelfView | null> => {
     const target = findBook(bookId);
-    if (target.location.shelf !== 27) return null;
+    const front = SHELF_FRONTS[target.location.shelf];
+    if (!front) return respond(null);
 
-    return {
-      shelf: 27,
-      side: 'front',
-      rows: SHELF_27_ROWS,
-      heat: SHELF_27_HEAT,
+    return respond({
+      shelf: target.location.shelf,
+      side: target.location.side,
+      ...front,
       target,
-      neighbors: CALL_NUMBER_NEIGHBORS[bookId] ?? { prev: '', next: '' },
-      recommendations: await bookApi.getRecommendations(bookId),
-    };
+      neighbors: CALL_NUMBER_NEIGHBORS[bookId],
+    });
   },
 };

@@ -19,7 +19,7 @@
     "newArrivals": "새로 들어온 책",
     "newArrivalsCaption": "이번 주",
     "popular": "이달의 인기 있는 책",
-    "popularCaption": "{{month}}월 · 대출 많은 순",
+    "popularCaption": "{{month, number}}월 · 대출 많은 순",
     "title": "책 찾기",
     "viewAll": "전체 →"
   },
@@ -35,41 +35,41 @@
   },
   "location": {
     "back": "뒷면",
-    "directions": "{{shelf}}번 서가 {{side}} · 엘리베이터에서 약 {{distance}}m",
-    "directionsSlot": "{{shelf}}번 서가 {{side}} {{slot}}칸 · 엘리베이터에서 약 {{distance}}m",
+    "directions": "{{shelf, number}}번 서가 {{side}} · 엘리베이터에서 약 {{distance, number}}m",
+    "directionsSlot": "{{shelf, number}}번 서가 {{side}} {{slot, number}}칸 · 엘리베이터에서 약 {{distance, number}}m",
     "front": "앞면",
     "left": "왼쪽",
     "middle": "가운데",
     "right": "오른쪽",
-    "shelf": "{{floor}} · {{shelf}}번 서가",
-    "shelfSlot": "{{floor}} · {{shelf}}번 서가 · {{slot}}칸"
+    "shelf": "{{floor}} · {{shelf, number}}번 서가",
+    "shelfSlot": "{{floor}} · {{shelf, number}}번 서가 · {{slot, number}}칸"
   },
   "recommendation": {
-    "adjacent": "{{shelf}}번 서가 · 바로 옆",
+    "adjacent": "{{shelf, number}}번 서가 · 바로 옆",
     "basis": "{{title}} 기준",
     "borrowedTogether": "함께 빌린",
     "empty": "아직 추천할 책이 없어요",
-    "nearby": "{{shelf}}번 서가 · 약 {{distance}}m",
+    "nearby": "{{shelf, number}}번 서가 · 약 {{distance, number}}m",
     "outsideMajor": "전공 밖",
-    "sameShelf": "같은 서가 {{slot}}칸",
+    "sameShelf": "같은 서가 {{slot, number}}칸",
     "title": "추천"
   },
   "search": {
     "empty": "검색 결과가 없어요",
     "placeholder": "제목, 저자, 주제",
     "result": "결과",
-    "resultCount": "{{n}}권",
+    "resultCount": "{{n, number}}권",
     "submit": "검색"
   },
   "shelf": {
     "callOrder": "청구기호 순서",
-    "label": "{{shelf}}번 서가",
+    "label": "{{shelf, number}}번 서가",
     "notReady": "이 서가의 정면 정보는 준비 중이에요",
-    "recCount": "추천 {{n}}",
+    "recCount": "추천 {{n, number}}",
     "recList": "추천 목록 →",
-    "recSpine": "추천 {{rank}}번 책",
-    "recTag": "추천 {{rank}} · {{kind}}",
-    "slot": "{{slot}}칸",
+    "recSpine": "추천 {{rank, number}}번 책",
+    "recTag": "추천 {{rank, number}} · {{kind}}",
+    "slot": "{{slot, number}}칸",
     "thisBook": "이 책",
     "titleSuffix": "번 서가 · {{side}}",
     "viewTarget": "찾는 책 보기"

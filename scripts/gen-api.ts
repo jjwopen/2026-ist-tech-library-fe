@@ -12,14 +12,13 @@ async function generateApiSchema() {
   const swaggerPassword = Bun.env.SWAGGER_PASSWORD;
   const swaggerUrl = Bun.env.SWAGGER_URL;
 
-  if (!swaggerUser || !swaggerPassword) {
-    console.error('SWAGGER_USER and SWAGGER_PASSWORD must be set in .env file');
-    process.exit(1);
-  }
-
-  if (!swaggerUrl) {
-    console.error('SWAGGER_URL must be set in .env file (.json or .yaml URL)');
-    process.exit(1);
+  // 환경변수가 없는 환경(Vercel 등)에서는 생성을 건너뛰고 빌드를 계속함.
+  // 생성된 스키마를 import하는 코드가 있다면 이후 tsc 단계에서 실패하므로 누락을 놓치지 않음
+  if (!swaggerUser || !swaggerPassword || !swaggerUrl) {
+    console.warn(
+      'Skipping API schema generation: SWAGGER_USER, SWAGGER_PASSWORD and SWAGGER_URL must be set in .env file',
+    );
+    return;
   }
 
   const outputPath = join(process.cwd(), 'src/@types/api-schema.ts');

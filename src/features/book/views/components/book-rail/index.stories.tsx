@@ -10,7 +10,6 @@ const book: Book = {
   title: '밑바닥부터 시작하는 딥러닝',
   authors: '사이토 고키',
   callNumber: 'Q325.5 .S35 2017',
-  year: 2017,
   coverColor: '#1f3a5f',
   level: 'intro',
   keywords: [],

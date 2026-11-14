@@ -1,5 +1,4 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Inter:wght@600;700&display=swap');
+/* 웹폰트는 렌더링을 막지 않도록 index.html에서 <link>로 불러옴 */
 @import 'tailwindcss';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, .dark, .dark *));
@@ -24,11 +23,9 @@
   --app-field: #efede8;
   --app-paper: #ffffff;
   --app-accent: #e30613;
-  --app-accent-tint: #fce4e2;
   --app-heat-mid: #f39200;
   --app-heat-low: #ffd500;
   --app-rec: #1f4bd1;
-  --app-rec-tint: #e5ebfb;
 }
 
 /* Color palette (dark) */
@@ -52,11 +49,9 @@
   --app-field: #242424;
   --app-paper: #111111;
   --app-accent: #ff2b36;
-  --app-accent-tint: #3d1416;
   --app-heat-mid: #f39200;
   --app-heat-low: #ffd500;
   --app-rec: #5b7fff;
-  --app-rec-tint: #18213d;
 }
 
 @theme inline {
@@ -77,11 +72,9 @@
   --color-field: var(--app-field);
   --color-paper: var(--app-paper);
   --color-accent: var(--app-accent);
-  --color-accent-tint: var(--app-accent-tint);
   --color-heat-mid: var(--app-heat-mid);
   --color-heat-low: var(--app-heat-low);
   --color-rec: var(--app-rec);
-  --color-rec-tint: var(--app-rec-tint);
 }
 
 @theme {
@@ -152,6 +145,10 @@
   --text-overline--letter-spacing: 0.04em;
   --text-overline--font-weight: 700;
 
+  /* 표지·책등·배지처럼 테마와 상관없이 고정된 인쇄 색 */
+  --color-print-ink: #111111;
+  --color-print-paper: #ffffff;
+
   /* 숫자 전용 서체 (Figma Number · Inter Bold) */
   --font-num: 'Inter', 'Pretendard Variable', sans-serif;
 
@@ -193,4 +190,22 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Figma Number · Inter Bold 28 (층·서가 번호, 추천 순번) */
+@utility num-lg {
+  font-family: var(--font-num);
+  font-size: 1.75rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Figma Number · Inter Bold 12 (목록 순번, 칸 번호) */
+@utility num {
+  font-family: var(--font-num);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }

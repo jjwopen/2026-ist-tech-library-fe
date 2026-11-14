@@ -1,15 +1,3 @@
-export {
-  BookCoverArt,
-  BookRail,
-  BookTile,
-  FloorMap,
-  LocationSheet,
-  MiniShelf,
-  RecRow,
-  ResultRow,
-  ShelfFront,
-  ShelfPanel,
-} from './components';
 export { FloorPage } from './pages/floor-page';
 export { HomePage } from './pages/home-page';
 export { RecommendationPage } from './pages/recommendation-page';

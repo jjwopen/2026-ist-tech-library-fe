@@ -29,10 +29,16 @@ export function BookCoverArt({ title, color, size = 'sm', className }: BookCover
       className={cn('relative shrink-0 overflow-hidden', style.box, className)}
     >
       <span className={cn('absolute inset-y-0 left-0 bg-black/20', style.shade)} />
-      <span className={cn('absolute font-bold', light ? 'text-[#111]' : 'text-white', style.title)}>
+      <span
+        className={cn(
+          'absolute font-bold',
+          light ? 'text-print-ink' : 'text-print-paper',
+          style.title,
+        )}
+      >
         {title}
       </span>
-      <span className={cn('absolute', light ? 'bg-[#111]' : 'bg-white', style.imprint)} />
+      <span className={cn('absolute', light ? 'bg-print-ink' : 'bg-print-paper', style.imprint)} />
     </div>
   );
 }

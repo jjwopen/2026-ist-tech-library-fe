@@ -14,9 +14,9 @@ export default meta;
 type Story = StoryObj<typeof ShelfPanel>;
 
 function Preview({ rank }: { rank?: number }) {
-  const { shelf } = useShelfView('b-0193');
+  const { shelf, recommendations } = useShelfView('b-0193');
   if (!shelf) return null;
-  const selected = shelf.recommendations.find((rec) => rec.rank === rank) ?? null;
+  const selected = recommendations.find((rec) => rec.rank === rank) ?? null;
   return (
     <div className="max-w-[350px]">
       <ShelfPanel shelf={shelf} selected={selected} onClearSelection={() => {}} />

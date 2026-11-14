@@ -36,7 +36,6 @@ export const BOOKS: Book[] = [
     title: '밑바닥부터 시작하는 딥러닝',
     authors: '사이토 고키',
     callNumber: 'Q325.5 .S35 2017',
-    year: 2017,
     coverColor: '#1f3a5f',
     level: 'intro',
     keywords: ['딥러닝', 'deep learning', '파이썬'],
@@ -48,7 +47,6 @@ export const BOOKS: Book[] = [
     title: 'Do it! 딥러닝 입문',
     authors: '박해선',
     callNumber: 'Q325.5 .P37 2019',
-    year: 2019,
     coverColor: '#e2b93b',
     level: 'intro',
     keywords: ['딥러닝', '입문'],
@@ -60,7 +58,6 @@ export const BOOKS: Book[] = [
     title: '혼자 공부하는 머신러닝+딥러닝',
     authors: '박해선',
     callNumber: 'Q325.5 .P37 2020',
-    year: 2020,
     coverColor: '#2e7d5b',
     level: 'intro',
     keywords: ['머신러닝', '딥러닝'],
@@ -72,7 +69,6 @@ export const BOOKS: Book[] = [
     title: 'Deep Learning',
     authors: 'Ian Goodfellow 외',
     callNumber: 'Q325.5 .G66 2016',
-    year: 2016,
     coverColor: '#ece7dc',
     level: 'advanced',
     keywords: ['딥러닝', 'deep learning'],
@@ -84,7 +80,6 @@ export const BOOKS: Book[] = [
     title: '코스모스',
     authors: '칼 세이건',
     callNumber: 'QB44 .S24 2006',
-    year: 2006,
     coverColor: '#1a1a1a',
     keywords: ['우주', '천문학'],
     loan: { available: true },
@@ -95,7 +90,6 @@ export const BOOKS: Book[] = [
     title: '선형대수와 그 응용',
     authors: '길버트 스트랭',
     callNumber: 'QA184 .S77 2006',
-    year: 2006,
     coverColor: '#4a5a70',
     level: 'advanced',
     keywords: ['선형대수', '수학'],
@@ -107,7 +101,6 @@ export const BOOKS: Book[] = [
     title: '인공지능: 현대적 접근방식',
     authors: '스튜어트 러셀 · 피터 노빅',
     callNumber: 'Q335 .R86 2021',
-    year: 2021,
     coverColor: '#5b4a7a',
     level: 'advanced',
     keywords: ['인공지능', 'AI'],
@@ -119,7 +112,6 @@ export const BOOKS: Book[] = [
     title: '클린 코드',
     authors: '로버트 C. 마틴',
     callNumber: 'QA76.76 .M37 2013',
-    year: 2013,
     coverColor: '#e9e4d6',
     keywords: ['프로그래밍', '소프트웨어'],
     loan: { available: true },
@@ -130,7 +122,6 @@ export const BOOKS: Book[] = [
     title: '데이터 과학을 위한 통계',
     authors: '피터 브루스 외',
     callNumber: 'QA276.4 .B78 2021',
-    year: 2021,
     coverColor: '#d9772b',
     keywords: ['통계', '데이터'],
     loan: { available: true },
@@ -141,7 +132,6 @@ export const BOOKS: Book[] = [
     title: '엔드 오브 타임',
     authors: '브라이언 그린',
     callNumber: 'QB981 .G74 2021',
-    year: 2021,
     coverColor: '#0f2a3d',
     keywords: ['우주', '물리학'],
     loan: { available: true },
@@ -152,7 +142,6 @@ export const BOOKS: Book[] = [
     title: '파이썬 라이브러리를 활용한 데이터 분석',
     authors: '웨스 맥키니',
     callNumber: 'QA76.73 .P98 M33 2023',
-    year: 2023,
     coverColor: '#7a3e3e',
     keywords: ['파이썬', '데이터'],
     loan: { available: true },
@@ -163,7 +152,6 @@ export const BOOKS: Book[] = [
     title: 'AI 2041',
     authors: '리카이푸 · 천치우판',
     callNumber: 'Q335 .L44 2023',
-    year: 2023,
     coverColor: '#1e1e1e',
     keywords: ['인공지능', 'AI', '소설'],
     loan: { available: true },
@@ -253,7 +241,7 @@ const toSpines = (tuples: SpineTuple[]): ShelfSpine[] =>
     band,
   }));
 
-export const SHELF_27_ROWS: ShelfSpine[][] = [
+const SHELF_27_ROWS: ShelfSpine[][] = [
   toSpines([
     [20, 48, '#1f3a5f', '', true],
     [16, 54, '#6e5a44'],
@@ -335,16 +323,21 @@ export const SHELF_27_ROWS: ShelfSpine[][] = [
   ]),
 ];
 
-export const SHELF_27_HEAT: ShelfView['heat'] = {
-  slot: 3,
-  offset: 80,
-  segments: [
-    { width: 22, level: 'low' },
-    { width: 30, level: 'mid' },
-    { width: 54, level: 'high' },
-    { width: 30, level: 'mid' },
-    { width: 22, level: 'low' },
-  ],
+/** 서가 번호 → 정면 배치. 현재는 27번 서가 앞면만 있음 */
+export const SHELF_FRONTS: Record<number, Pick<ShelfView, 'rows' | 'heat'>> = {
+  27: {
+    rows: SHELF_27_ROWS,
+    heat: {
+      offset: 80,
+      segments: [
+        { width: 22, level: 'low' },
+        { width: 30, level: 'mid' },
+        { width: 54, level: 'high' },
+        { width: 30, level: 'mid' },
+        { width: 22, level: 'low' },
+      ],
+    },
+  },
 };
 
 export const CALL_NUMBER_NEIGHBORS: Record<string, ShelfView['neighbors']> = {
