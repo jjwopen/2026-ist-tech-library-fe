@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite dev --port 5173",
     "build": "bun run gen:api && bun run gen:i18n && tsr generate && tsc && vite build",
+    "build:vercel": "bun run gen:i18n && tsr generate && tsc && vite build",
     "preview": "bun run build && vite preview",
     "test": "vitest run",
     "lint": "eslint",
