@@ -1,0 +1,84 @@
+{
+  "action": {
+    "viewLocation": "Locate →"
+  },
+  "floor": {
+    "elevator": "EV",
+    "mapLabel": "{{floor}} floor plan",
+    "north": "N",
+    "notReady": "The floor plan for this floor is coming soon",
+    "returnKiosk": "Return",
+    "stairs": "Stairs",
+    "start": "Start",
+    "studyRoom": "Group study rooms",
+    "tabs": "Select floor",
+    "viewShelf": "View shelf →"
+  },
+  "home": {
+    "library": "POSTECH Park Tae-Joon Library",
+    "newArrivals": "New arrivals",
+    "newArrivalsCaption": "This week",
+    "popular": "Popular this month",
+    "popularCaption": "Month {{month}} · Most borrowed",
+    "title": "Find a book",
+    "viewAll": "All →"
+  },
+  "legend": {
+    "high": "High",
+    "low": "Low",
+    "rec": "Recommended",
+    "route": "Route"
+  },
+  "level": {
+    "advanced": "Advanced",
+    "intro": "Intro"
+  },
+  "location": {
+    "back": "back",
+    "directions": "Shelf {{shelf}} {{side}} · about {{distance}}m from the elevator",
+    "directionsSlot": "Shelf {{shelf}} {{side}}, tier {{slot}} · about {{distance}}m from the elevator",
+    "front": "front",
+    "left": "left",
+    "middle": "middle",
+    "right": "right",
+    "shelf": "{{floor}} · Shelf {{shelf}}",
+    "shelfSlot": "{{floor}} · Shelf {{shelf}} · Tier {{slot}}"
+  },
+  "recommendation": {
+    "adjacent": "Shelf {{shelf}} · right next door",
+    "basis": "Based on {{title}}",
+    "borrowedTogether": "Borrowed together",
+    "empty": "No recommendations yet",
+    "nearby": "Shelf {{shelf}} · about {{distance}}m",
+    "outsideMajor": "Outside major",
+    "sameShelf": "Same shelf, tier {{slot}}",
+    "title": "Recommended"
+  },
+  "search": {
+    "empty": "No results found",
+    "placeholder": "Title, author, subject",
+    "result": "Results",
+    "resultCount": "{{n}} books",
+    "submit": "Search"
+  },
+  "shelf": {
+    "callOrder": "Call number order",
+    "label": "Shelf {{shelf}}",
+    "notReady": "Shelf view for this shelf is coming soon",
+    "recCount": "{{n}} picks",
+    "recList": "All picks →",
+    "recSpine": "Recommended book {{rank}}",
+    "recTag": "Pick {{rank}} · {{kind}}",
+    "slot": "Tier {{slot}}",
+    "thisBook": "This book",
+    "titleSuffix": "· {{side}}",
+    "viewTarget": "Back to my book"
+  },
+  "status": {
+    "available": "Available",
+    "onLoan": "On loan · due {{date}}"
+  },
+  "tag": {
+    "target": "Your book"
+  }
+}

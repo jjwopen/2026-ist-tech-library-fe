@@ -1,8 +1,11 @@
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
+import { Suspense } from 'react';
 import type { Preview } from '@storybook/react-vite';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterContextProvider } from '@tanstack/react-router';
-import { router } from '../src/router';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
+import { queryClient, router } from '../src/router';
 
 import { withLocale } from './decorators';
 
@@ -24,8 +27,10 @@ const preview: Preview = {
   },
   initialGlobals: {
     locale: 'ko',
+    viewport: { value: 'iphone12', isRotated: false },
   },
   parameters: {
+    viewport: { options: INITIAL_VIEWPORTS },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -44,9 +49,13 @@ const preview: Preview = {
     }),
     withLocale,
     (Story) => (
-      <RouterContextProvider router={router}>
-        <Story />
-      </RouterContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterContextProvider router={router}>
+          <Suspense fallback={null}>
+            <Story />
+          </Suspense>
+        </RouterContextProvider>
+      </QueryClientProvider>
     ),
   ],
 };
