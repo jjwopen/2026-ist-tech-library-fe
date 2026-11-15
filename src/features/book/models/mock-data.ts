@@ -12,20 +12,21 @@ const book = (title: string, coverColor: string, shelf: string): HomeBook => ({
   shelf,
 });
 
+/** 표지 이미지가 있는 소장 도서 — 제목으로 검색한 첫 결과가 해당 책이어야 표지를 찾을 수 있음 */
 export const POPULAR_BOOKS: HomeBook[] = [
-  book('밑바닥부터 시작하는 딥러닝', '#233552', '335'),
-  book('혼자 공부하는 머신러닝+딥러닝', '#2F5D4A', '335'),
-  book('코스모스', '#5B4A6E', '339'),
-  book('선형대수와 그 응용', '#4D5966', '338'),
-  book('Do it! 딥러닝 입문', '#C9A23F', '335'),
-  book('파이썬 라이브러리를 활용한 데이터 분석', '#9A4A36', '337'),
+  book('Deep learning', '#233552', '335'),
+  book('수학 걸', '#C9A23F', '335'),
+  book('Pattern recognition and machine learning', '#4D5966', '335'),
+  book('모두를 위한 R 데이터 분석 입문', '#2F5D4A', '335'),
+  book('Introduction to algorithms', '#9A4A36', '335'),
+  book('대학물리학', '#5B4A6E', '335'),
 ];
 
 export const NEW_ARRIVALS = [
-  { arrivedAt: '2026-11-12', book: book('인공지능: 현대적 접근방식', '#2F6670', '336') },
-  { arrivedAt: '2026-11-11', book: book('클린 코드', '#E9E2D3', '337') },
-  { arrivedAt: '2026-11-10', book: book('데이터 과학을 위한 통계', '#D0743A', '338') },
-  { arrivedAt: '2026-11-09', book: book('엔드 오브 타임', '#1F2F48', '339') },
+  { arrivedAt: '2026-11-12', book: book('Generative deep learning', '#2F6670', '335') },
+  { arrivedAt: '2026-11-11', book: book('우주탐사 매뉴얼', '#1F2F48', '335') },
+  { arrivedAt: '2026-11-10', book: book('Probabilistic machine learning', '#E9E2D3', '335') },
+  { arrivedAt: '2026-11-09', book: book('Mathematics for machine learning', '#D0743A', '335') },
 ];
 
 export const POPULAR_QUERIES = ['딥러닝 입문', '선형대수', '코스모스'];

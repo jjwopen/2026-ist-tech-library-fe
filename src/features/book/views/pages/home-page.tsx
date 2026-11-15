@@ -132,6 +132,7 @@ function Home() {
                 role="listitem"
                 title={book.title}
                 color={book.coverColor}
+                image={book.coverUrl}
                 over={<b>{rank}</b>}
                 meta={shelfMeta(book)}
                 pressProps={{
@@ -155,6 +156,7 @@ function Home() {
                 role="listitem"
                 title={book.title}
                 color={book.coverColor}
+                image={book.coverUrl}
                 over={dayjs(arrivedAt).format('MM.DD')}
                 meta={shelfMeta(book)}
                 pressProps={{
