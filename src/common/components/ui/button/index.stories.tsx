@@ -10,7 +10,7 @@ const meta: Meta<typeof Button> = {
     variant: { control: 'radio', options: ['primary', 'outline', 'rec', 'rec-outline', 'text'] },
     size: { control: 'radio', options: ['md', 'lg'] },
   },
-  args: { children: '서가 보기 →' },
+  args: { children: '책장 보기 →' },
 };
 
 export default meta;

@@ -36,7 +36,7 @@ const meta: Meta<typeof BookInfo> = {
     book,
     intro: {
       synopsis: '파이토치로 딥러닝을 처음부터 실습하는 입문서. 예시 문구예요.',
-      recommendedFor: ['코드로 먼저 이해하고 싶을 때', '다음엔 같은 서가의 비슷한 책'],
+      recommendedFor: ['코드로 먼저 이해하고 싶을 때', '다음엔 같은 책장의 비슷한 책'],
     },
     recommendations: [],
     recsLoading: false,
