@@ -12,7 +12,7 @@ export function Footer({ selected }: Footer.Props) {
 
   const tabs = [
     { key: 'search', to: '/', icon: ICONS.search, label: t('search') },
-    { key: 'map', to: '/floor', icon: ICONS.map, label: t('map') },
+    { key: 'map', to: '/search', icon: ICONS.map, label: t('map') },
   ] as const;
 
   return (

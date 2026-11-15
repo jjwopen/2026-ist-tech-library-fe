@@ -3,9 +3,10 @@ import { api } from '@/common/lib/api';
 
 import { coverColorOf, toBook } from './book-mapper';
 import { loadFloorMaps } from './library-map';
-import { NEW_ARRIVALS, POPULAR_BOOKS } from './mock-data';
+import { mockIntro, NEW_ARRIVALS, POPULAR_BOOKS, POPULAR_QUERIES } from './mock-data';
 import {
   type Book,
+  type BookIntro,
   type NewArrival,
   type PopularBook,
   type Recommendation,
@@ -31,7 +32,7 @@ export const bookApi = {
   /** 검색어의 쉼표·세미콜론은 서버가 허용하지 않아 공백으로 바꿈 */
   searchBooks: async (query: string): Promise<SearchResult> => {
     const q = query.replace(/[,;]/g, ' ').trim().slice(0, 200);
-    if (!q) return { books: [], total: 0 };
+    if (!q) return { books: [], hasMore: false };
 
     const data = unwrap(
       await api.GET('/api/books', {
@@ -40,7 +41,7 @@ export const bookApi = {
         },
       }),
     );
-    return { books: data.books.map(toBook), total: data.total };
+    return { books: data.books.map(toBook), hasMore: data.hasMore };
   },
 
   /** ISBN이 없거나 추천 데이터에 없는 ISBN(404)이면 빈 목록 */
@@ -56,8 +57,8 @@ export const bookApi = {
         rank: index + 1,
         title: rec.title.replace(/\s*[/:]\s*$/, '').trim(),
         authors: rec.authors.join(', '),
-        reasons: rec.reasons,
         explanation: rec.explanation,
+        coverUrl: book?.coverUrl ?? null,
         coverColor: book?.coverColor ?? coverColorOf(rec.title),
         book,
       };
@@ -72,4 +73,8 @@ export const bookApi = {
     Promise.resolve(POPULAR_BOOKS.map((book, index) => ({ rank: index + 1, book }))),
 
   getNewArrivals: (): Promise<NewArrival[]> => Promise.resolve(NEW_ARRIVALS),
+
+  getPopularQueries: (): Promise<string[]> => Promise.resolve(POPULAR_QUERIES),
+
+  getIntro: (target: Book): Promise<BookIntro> => Promise.resolve(mockIntro(target)),
 };

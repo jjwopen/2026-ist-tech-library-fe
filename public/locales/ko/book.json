@@ -1,71 +1,91 @@
 {
-  "action": {
-    "viewLocation": "위치 보기 →"
-  },
-  "floor": {
-    "mapLabel": "도서관 통합 서가맵",
-    "notReady": "이 층의 도면은 준비 중이에요",
-    "tabs": "층 선택",
-    "viewShelf": "서가 보기 →",
-    "zoomIn": "확대",
-    "zoomOut": "전체 보기"
+  "face": {
+    "back": "뒷면",
+    "front": "앞면"
   },
   "home": {
-    "library": "POSTECH 박태준학술정보관",
+    "lead1": "읽거나 찾고 싶은 책을",
+    "lead2": "찾아보세요!",
     "newArrivals": "새로 들어온 책",
     "newArrivalsCaption": "이번 주",
+    "openBook": "{{title}} 자세히 보기",
+    "placeholder": "예) 딥러닝 입문",
     "popular": "이달의 인기 있는 책",
-    "popularCaption": "{{month, number}}월 · 대출 많은 순",
-    "title": "책 찾기"
+    "popularCaption": "{{month, number}}월 · 대출 순",
+    "popularQueries": "많이 찾는 말",
+    "pressCursor": "꾹 · 자세히",
+    "pressHint": "표지를 꾹 누르면 책 소개가 열려요",
+    "searchLabel": "검색어",
+    "submit": "찾기",
+    "tagline": "찾는 책이 꽂힌 자리까지 알려 주는 도서관 길잡이",
+    "toSearch": "검색으로 가기"
   },
-  "legend": {
-    "high": "높음",
-    "low": "낮음",
-    "rec": "추천 책"
+  "info": {
+    "callNumber": "청구기호",
+    "intro": "책 소개",
+    "openSimilar": "{{title}} 보기",
+    "place": "자리",
+    "recommendedFor": "이런 분께 권해요",
+    "similar": "비슷한 책",
+    "similarEmpty": "이 책과 비슷한 책은 아직 없어요",
+    "similarLoading": "비슷한 책을 고르는 중이에요…",
+    "spot": "칸",
+    "status": "상태"
+  },
+  "loading": {
+    "step1": "서가를 살펴보는 중",
+    "step2": "청구기호 순서를 맞춰 보는 중",
+    "step3": "같이 볼 만한 책을 고르는 중",
+    "title": "찾는 중"
   },
   "location": {
-    "directions": "{{shelf}}번 서가 {{side}}면 {{slot, number}}칸 부근",
-    "left": "왼쪽",
-    "middle": "가운데",
-    "right": "오른쪽",
-    "shelf": "{{floor}} · {{shelf}}번 서가",
-    "shelfSlot": "{{floor}} · {{shelf}}번 서가 · {{slot, number}}칸",
-    "unknown": "위치 정보 없음"
-  },
-  "recommendation": {
-    "basis": "{{title}} 기준",
-    "empty": "이 책에 대한 추천이 아직 없어요",
-    "notInLibrary": "도서관 미소장",
-    "sameShelf": "같은 서가 {{slot, number}}칸",
-    "title": "추천"
+    "closeNote": "추천 책 닫기",
+    "elevationLabel": "{{shelf}}번 서가, {{rows, number}}단 {{columns, number}}칸",
+    "faceLabel": "면",
+    "faces": "서가 면",
+    "floor": "{{floor}}층",
+    "floorLabel": "층",
+    "here": "여기",
+    "place": "{{shelf}}번 서가 · {{face}} {{spot}}",
+    "planLabel": "{{floor}} 평면도",
+    "planTitle": "{{floor}} 평면도",
+    "shelf": "{{shelf}}번 서가",
+    "similarOnShelf": "{{title}}, 같이 볼 만한 책",
+    "spot": "{{slot, number}}단 {{column, number}}칸",
+    "spotLabel": "단 · 칸",
+    "unknown": "위치를 알 수 없는 자료"
   },
   "search": {
-    "empty": "검색 결과가 없어요",
-    "placeholder": "제목, 저자, 주제",
-    "prompt": "찾을 책의 제목이나 저자를 입력해 주세요",
-    "result": "결과",
-    "resultCount": "{{n, number}}권",
-    "submit": "검색"
+    "again": "다시 찾기",
+    "count": "{{n, number}}권",
+    "countMore": "{{n, number}}권 이상",
+    "emptyQuery": "무엇을 찾을까요?",
+    "errorBody": "도서관 목록에 연결하지 못했어요. 잠시 뒤에 다시 해 주세요.",
+    "errorTitle": "지금은 찾을 수 없어요",
+    "home": "처음으로",
+    "noneBody": "도서관에 없는 책이거나 검색어가 달랐을 수 있어요.",
+    "noneTitle": "찾은 책이 없어요",
+    "pressHint": "표지를 꾹 누르면 자세히 볼 수 있어요",
+    "retry": "다시 해 보기",
+    "similar": "같이 볼 만한 책",
+    "similarBasis": "{{title}} 기준",
+    "subOneShelf": "{{books}} · 모두 {{floor}} {{shelf}}번 서가에 있어요",
+    "subShelves": "{{books}} · 서가 {{shelves, number}}곳에 있어요",
+    "tipAuthor": "저자 이름으로 찾아 보세요",
+    "tipShorter": "더 짧은 낱말로 찾아 보세요",
+    "tipSpacing": "띄어쓰기를 바꿔 보세요"
   },
-  "shelf": {
-    "estimatedNote": "청구기호로 추정한 위치라 실제와 조금 다를 수 있어요",
-    "label": "{{shelf}}번 서가",
-    "notReady": "위치를 추정할 수 없는 자료예요",
-    "recCount": "추천 {{n, number}}",
-    "recList": "추천 목록 →",
-    "recSpine": "추천 {{rank, number}}번 책",
-    "recTag": "추천 {{rank, number}} · {{kind}}",
-    "recTagRankOnly": "추천 {{rank, number}}",
-    "slot": "{{slot, number}}칸",
-    "titleSuffix": "번 서가 · {{side}}면",
-    "viewTarget": "찾는 책 보기"
+  "sheet": {
+    "close": "닫기",
+    "finding": "도서관에서 이 책을 찾는 중이에요…",
+    "label": "책 정보",
+    "missing": "도서관에서 이 책을 찾지 못했어요",
+    "toInfo": "책 정보로 돌아가기",
+    "toLocation": "책 위치 확인하기"
   },
   "status": {
     "available": "대출 가능",
-    "unavailable": "대출 불가",
+    "unavailable": "대출 중",
     "unknown": "상태 확인 필요"
-  },
-  "tag": {
-    "target": "찾는 책"
   }
 }

@@ -8,8 +8,15 @@ export type FloorMap = {
   viewBox: { x: number; y: number; width: number; height: number };
   /** 정리된 SVG 자식 요소 마크업 (서가 요소에는 `data-shelf`=도면 요소 ID) */
   markup: string;
-  /** 도면 요소 ID → 마커를 올릴 중심 좌표 */
-  shelves: Record<string, { x: number; y: number }>;
+  /** 도면 요소 ID → 마커를 올릴 중심 좌표 (선으로 그린 서가는 양 끝점도) */
+  shelves: Record<string, FloorShelf>;
+};
+
+export type FloorShelf = {
+  x: number;
+  y: number;
+  /** 선 서가의 양 끝점 [x1, y1, x2, y2] — 평행 투시로 세워 그릴 때 사용 */
+  segment?: [number, number, number, number];
 };
 
 /** 서가 한 칸 안에서의 가로 위치 */
@@ -44,14 +51,24 @@ export type Book = {
   authors: string;
   isbn: string | null;
   callNumber: string | null;
-  /** 표지 대표색 — 표지 이미지가 없어 ID로 정함 */
+  publisher: string | null;
+  year: string | null;
+  /** 도서관이 제공하는 책 소개 (없으면 null) */
+  description: string | null;
+  /** 표지 이미지 — 없으면 대표색으로 그린 표지 */
+  coverUrl: string | null;
+  /** 표지 대표색 — 표지 이미지가 없을 때와 책 두께 단면에 사용 */
   coverColor: string;
   loan: LoanStatus;
   /** 위치를 추정할 수 없는 자료면 null */
   location: BookLocation | null;
 };
 
-export type SearchResult = { books: Book[]; total: number };
+/** 검색 결과 — 서버가 전체 권수를 주지 않아 다음 쪽이 있는지만 앎 */
+export type SearchResult = { books: Book[]; hasMore: boolean };
+
+/** 책 소개 · 이런 분께 권해요 — API가 없어 목업 문구 사용 */
+export type BookIntro = { synopsis: string; recommendedFor: string[] };
 
 /** 홈 목록용 책 — API가 없어 목업 데이터 사용 */
 export type HomeBook = {
@@ -69,10 +86,9 @@ export type Recommendation = {
   rank: number;
   title: string;
   authors: string;
-  /** 추천 이유 태그 (e.g. 같은 분야, 더 쉬운 난이도) */
-  reasons: string[];
   /** 추천 설명 한두 문장 */
   explanation: string;
+  coverUrl: string | null;
   coverColor: string;
   /** 도서관에 소장된 경우의 책 정보 */
   book: Book | null;

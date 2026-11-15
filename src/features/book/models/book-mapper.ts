@@ -65,6 +65,15 @@ export function toBook(dto: BookDto): Book {
     authors: dto.authors.join(', '),
     isbn: dto.isbn[0] ?? null,
     callNumber: holding?.callNumber ?? null,
+    // "서울 : 한빛미디어," → "한빛미디어" (발행지와 끝 구두점 제거)
+    publisher:
+      dto.publisher
+        ?.replace(/^[^:]*:\s*/, '')
+        .replace(/[,:;]\s*$/, '')
+        .trim() || null,
+    year: dto.publicationYear,
+    description: dto.description?.trim() || null,
+    coverUrl: dto.imageUrl,
     coverColor: coverColorOf(dto.id),
     loan: holding?.availability ?? 'unknown',
     location: toLocation(holding),

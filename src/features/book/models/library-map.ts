@@ -1,4 +1,4 @@
-import { FLOORS, type FloorId, type FloorMap } from './types';
+import { FLOORS, type FloorId, type FloorMap, type FloorShelf } from './types';
 
 /**
  * 층별 도면 SVG(`src/common/assets/floor-maps/{층}.svg`, 공식 통합 서가맵에서 추출)를
@@ -67,13 +67,17 @@ const SHELF_ID = /^_\dF[-_][\w-]+$/i;
 const num = (element: Element, name: string) => Number(element.getAttribute(name) ?? 0);
 
 /** 마커를 올릴 도형 중심 — 선·사각형·원과 그 묶음만 계산 */
-function centerOf(element: Element): { x: number; y: number } | null {
+function centerOf(element: Element): FloorShelf | null {
   switch (element.tagName) {
-    case 'line':
-      return {
-        x: (num(element, 'x1') + num(element, 'x2')) / 2,
-        y: (num(element, 'y1') + num(element, 'y2')) / 2,
-      };
+    case 'line': {
+      const segment: FloorShelf['segment'] = [
+        num(element, 'x1'),
+        num(element, 'y1'),
+        num(element, 'x2'),
+        num(element, 'y2'),
+      ];
+      return { x: (segment[0] + segment[2]) / 2, y: (segment[1] + segment[3]) / 2, segment };
+    }
     case 'rect':
       return {
         x: num(element, 'x') + num(element, 'width') / 2,

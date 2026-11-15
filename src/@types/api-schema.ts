@@ -28,7 +28,7 @@ export interface paths {
     };
     /**
      * 도서 검색
-     * @description API 키 없이 POSTECH 공개 검색을 조회합니다. 기본값은 실물 도서 제목 검색이며, 동일 요청은 최대 60초 캐시합니다.
+     * @description printed_book 자료 중 지도에 연결된 소장 위치가 있는 책만 반환합니다. 다음 페이지는 nextOffset을 사용하세요. 기본값은 제목 검색이며, 동일 요청은 최대 60초 캐시합니다.
      */
     get: operations['CatalogController_search'];
     put?: never;
@@ -121,8 +121,6 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     EstimatedCellDto: {
-      /** @example true */
-      estimated: boolean;
       /**
        * @description 청구기호 앞 절반=A, 뒤 절반=B. 안쪽 A=반시계/B=시계, 바깥쪽 A=시계/B=반시계 방향 쪽.
        * @enum {string}
@@ -134,25 +132,12 @@ export interface components {
        */
       ring: EstimatedCellDtoRing;
       /**
-       * @description 도면 중심 기준 청구기호가 증가하는 서가 진행 방향.
-       * @enum {string|null}
-       */
-      sequenceDirection: EstimatedCellDtoSequenceDirection;
-      /**
        * @description 선택된 A/B면이 향한 쪽. 도면 중심 기준.
        * @enum {string|null}
        */
-      sideDirection: EstimatedCellDtoSequenceDirection;
+      sideDirection: EstimatedCellDtoSideDirection;
       row: number;
       column: number;
-      /** @example 160000 */
-      assumedTotalBooks: number;
-      /** @example 153 */
-      assumedShelfCount: number;
-      averageBooksPerShelf: number;
-      averageBooksPerCell: number;
-      /** @enum {string} */
-      method: EstimatedCellDtoMethod;
     };
     ShelfCandidateDto: {
       /** @example _3F-332 */
@@ -161,38 +146,28 @@ export interface components {
       shelfNumber: string;
       /** @example 3 */
       floor: number;
-      callNumberStart: string;
-      callNumberEnd: string;
-      progress: number;
       cell: components['schemas']['EstimatedCellDto'];
     };
     LocationGuideDto: {
       /** @enum {string} */
       status: LocationGuideDtoStatus;
-      source: string;
-      mapUrl: string;
       /** @example true */
       estimated: boolean;
-      /** @enum {string} */
-      confidence: LocationGuideDtoConfidence;
       floor: number | null;
       shelfId: string | null;
       shelfNumber: string | null;
       mapElementIds: string[];
       cell: components['schemas']['EstimatedCellDto'] | null;
+      /** @description 복수 후보가 있는 ambiguous 상태에서만 채웁니다. */
       candidates: components['schemas']['ShelfCandidateDto'][];
       label: string;
-      reason: string;
     };
     HoldingDto: {
       locationGuide: components['schemas']['LocationGuideDto'];
       /** @example 22110103000003286 */
       id: string | null;
-      library: string | null;
       /** @example Book Collection(3F) */
       location: string | null;
-      /** @example c3b */
-      locationCode: string | null;
       /** @example PL959.55. 한12 .채58 2007 */
       callNumber: string | null;
       /**
@@ -200,67 +175,50 @@ export interface components {
        * @enum {string}
        */
       availability: HoldingDtoAvailability;
-      mapUrl: string | null;
     };
     BookDto: {
+      /** @description 표지 이미지 URL. 표지가 없거나 조회에 실패하면 null. */
+      imageUrl: string | null;
       /** @example alma991000688189703286 */
       id: string;
       /** @example 채식주의자 : 한강 연작소설 */
       title: string;
+      /** @description 도서관이 제공하는 책 소개·요약. 제공되지 않으면 null이며 HTML을 제거한 텍스트입니다. */
+      description: string | null;
       authors: string[];
       isbn: string[];
       publisher: string | null;
       publicationYear: string | null;
-      materialType: string | null;
       holdings: components['schemas']['HoldingDto'][];
-      sourceUrl: string;
     };
     SearchResponseDto: {
-      query: string;
-      /** @enum {string} */
-      field: PathsApiBooksGetParametersQueryField;
-      /** @enum {string} */
-      material: PathsApiBooksGetParametersQueryMaterial;
-      total: number;
-      offset: number;
-      limit: number;
       hasMore: boolean;
-      /** Format: date-time */
-      fetchedAt: string;
+      /** @description 다음 검색 요청의 offset. 다음 페이지가 없으면 null. */
+      nextOffset: number | null;
       books: components['schemas']['BookDto'][];
     };
     BookDetailDto: {
+      /** @description 표지 이미지 URL. 표지가 없거나 조회에 실패하면 null. */
+      imageUrl: string | null;
       /** @example alma991000688189703286 */
       id: string;
       /** @example 채식주의자 : 한강 연작소설 */
       title: string;
+      /** @description 도서관이 제공하는 책 소개·요약. 제공되지 않으면 null이며 HTML을 제거한 텍스트입니다. */
+      description: string | null;
       authors: string[];
       isbn: string[];
       publisher: string | null;
       publicationYear: string | null;
-      materialType: string | null;
       holdings: components['schemas']['HoldingDto'][];
-      sourceUrl: string;
-      /**
-       * Format: date-time
-       * @description 원본 조회 시각. 최대 60초간 캐시합니다.
-       */
-      fetchedAt: string;
     };
     CopyDto: {
       locationGuide: components['schemas']['LocationGuideDto'];
       id: string | null;
-      holdingId: string | null;
       callNumber: string | null;
-      location: string | null;
-      locationCode: string | null;
       copy: string | null;
       /** @enum {string} */
       status: CopyDtoStatus;
-      /** @description 도서관이 제공한 원본 상태 문구 */
-      statusText: string | null;
-      /** @description 원본에서 확인된 반납 예정일 문구. 제공되지 않으면 null. */
-      dueDateText: string | null;
       /**
        * @description 확실하게 해석된 YYYY-MM-DD 날짜. 시간대·시각은 가정하지 않습니다.
        * @example 2026-12-01
@@ -268,46 +226,28 @@ export interface components {
       dueDate: string | null;
     };
     ItemsResponseDto: {
-      recordId: string;
-      holdingId: string;
-      start: number;
-      limit: number;
-      /** Format: date-time */
-      fetchedAt: string;
-      availabilityStatement: string | null;
       hasMore: boolean;
       nextStart: number | null;
       items: components['schemas']['CopyDto'][];
     };
     RecommendRequestDto: {
       /**
-       * @description ?? ?? ??? ISBN-10 ?? ISBN-13
+       * @description 선택한 도서의 ISBN-10 또는 ISBN-13
        * @example 9780134610993
        */
       isbn: string;
-    };
-    RecommendationBookDto: {
-      title: string;
-      isbn: string[];
-      authors: string[];
-      publishedDate: string | null;
     };
     RecommendedBookDto: {
       title: string;
       isbn: string[];
       authors: string[];
       publishedDate: string | null;
-      similarity: number;
-      reasons: string[];
       explanation: string;
       /** @enum {string} */
       catalogStatus: RecommendedBookDtoCatalogStatus;
       catalogBooks: components['schemas']['BookDto'][];
     };
     RecommendationsResponseDto: {
-      source: components['schemas']['RecommendationBookDto'];
-      candidateCount: number;
-      bookCount: number;
       recommendations: components['schemas']['RecommendedBookDto'][];
     };
     ErrorDto: {
@@ -345,11 +285,6 @@ export interface operations {
              * @enum {string}
              */
             status: PathsApiHealthLiveGetResponses200ContentApplicationJsonStatus;
-            /**
-             * @example postech-library-api
-             * @enum {string}
-             */
-            service: PathsApiHealthLiveGetResponses200ContentApplicationJsonService;
           };
         };
       };
@@ -648,12 +583,8 @@ export interface operations {
 export enum PathsApiHealthLiveGetResponses200ContentApplicationJsonStatus {
   ok = 'ok',
 }
-export enum PathsApiHealthLiveGetResponses200ContentApplicationJsonService {
-  postech_library_api = 'postech-library-api',
-}
 export enum PathsApiBooksGetParametersQueryMaterial {
   printed_book = 'printed_book',
-  all = 'all',
 }
 export enum PathsApiBooksGetParametersQueryField {
   title = 'title',
@@ -669,21 +600,15 @@ export enum EstimatedCellDtoRing {
   inner = 'inner',
   outer = 'outer',
 }
-export enum EstimatedCellDtoSequenceDirection {
+export enum EstimatedCellDtoSideDirection {
   clockwise = 'clockwise',
   counterclockwise = 'counterclockwise',
-}
-export enum EstimatedCellDtoMethod {
-  uniform_call_number_progress = 'uniform-call-number-progress',
 }
 export enum LocationGuideDtoStatus {
   estimated = 'estimated',
   ambiguous = 'ambiguous',
   special = 'special',
   unmapped = 'unmapped',
-}
-export enum LocationGuideDtoConfidence {
-  low = 'low',
 }
 export enum HoldingDtoAvailability {
   available = 'available',

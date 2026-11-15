@@ -3,18 +3,19 @@ export {
   SHELF_COLUMNS,
   SHELF_ROWS,
   type Book,
+  type BookIntro,
   type BookLocation,
   type FloorId,
   type FloorMap,
+  type FloorShelf,
   type HomeBook,
   type LoanStatus,
   type NewArrival,
   type PopularBook,
   type Recommendation,
 } from '../models';
-export { useBook } from './use-book';
-export { useFloorMap, useFloorTarget, type FloorMarker } from './use-floor-map';
+export { useBookSheet, type SheetSource } from './use-book-sheet';
+export { useFloorMaps } from './use-floor-maps';
 export { useHomeBooks } from './use-home-books';
-export { useRecommendations } from './use-recommendations';
 export { useSearchBooks } from './use-search-books';
-export { useShelfView, type ShelfMarker } from './use-shelf-view';
+export { useSimilarBooks } from './use-similar-books';
