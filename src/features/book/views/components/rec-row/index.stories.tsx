@@ -5,21 +5,29 @@ import { RecRow } from '.';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const book: Book = {
-  id: 'b-0193',
-  title: '밑바닥부터 시작하는 딥러닝',
-  authors: '사이토 고키',
-  callNumber: 'Q325.5 .S35 2017',
+  id: 'alma991003491172303286',
+  title: '딥러닝에 목마른 사람들을 위한 PyTorch',
+  authors: '장지수',
+  isbn: '9791190014366',
+  callNumber: 'Q325.5 .장78 2019',
   coverColor: '#1f3a5f',
-  level: 'intro',
-  keywords: [],
-  loan: { available: true },
-  location: { floor: '3F', shelf: 27, side: 'front', slot: 3, distanceFromElevator: 20 },
+  loan: 'available',
+  location: {
+    floor: '3F',
+    shelf: '335',
+    side: 'A',
+    slot: 3,
+    column: 4,
+    position: 'middle',
+    mapElementId: '_3F-335',
+  },
 };
 
 const meta: Meta<typeof RecRow> = {
   title: 'Book/RecRow',
   component: RecRow,
   tags: ['autodocs'],
+  args: { target: book },
 };
 
 export default meta;
@@ -29,27 +37,26 @@ export const SameShelf: Story = {
   args: {
     recommendation: {
       rank: 1,
-      kind: 'intro',
-      reason: '그림으로 개념부터',
-      where: { type: 'same-shelf', slot: 3 },
-      book: { ...book, title: 'Do it! 딥러닝 입문', authors: '박해선', coverColor: '#e2b93b' },
+      title: 'JAX/Flax로 딥러닝 레벨업',
+      authors: '',
+      reasons: ['같은 분야', '더 쉬운 난이도'],
+      explanation: '같은 서가에 있는 실습 위주의 입문서입니다.',
+      coverColor: '#e2b93b',
+      book: { ...book, id: 'alma991003810747303286', title: 'JAX/Flax로 딥러닝 레벨업' },
     },
   },
 };
 
-export const Nearby: Story = {
+export const NotInLibrary: Story = {
   args: {
     recommendation: {
       rank: 3,
-      kind: 'borrowed-together',
-      reason: '같이 빌린 기록이 많은 실습서',
-      where: { type: 'nearby', shelf: 34, distance: 15 },
-      book: {
-        ...book,
-        title: '파이썬 라이브러리를 활용한 데이터 분석',
-        authors: '웨스 맥키니',
-        coverColor: '#7a3e3e',
-      },
+      title: 'Deep Learning',
+      authors: 'Ian Goodfellow, Yoshua Bengio',
+      reasons: ['같은 분야', '더 어려운 난이도'],
+      explanation: '수식으로 원리까지 다루는 심화 교재입니다.',
+      coverColor: '#7a3e3e',
+      book: null,
     },
   },
 };

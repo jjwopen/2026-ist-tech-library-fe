@@ -5,15 +5,22 @@ import { ResultRow } from '.';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const book: Book = {
-  id: 'b-0193',
-  title: '밑바닥부터 시작하는 딥러닝',
-  authors: '사이토 고키',
-  callNumber: 'Q325.5 .S35 2017',
+  id: 'alma991003491172303286',
+  title: '딥러닝에 목마른 사람들을 위한 PyTorch',
+  authors: '장지수',
+  isbn: '9791190014366',
+  callNumber: 'Q325.5 .장78 2019',
   coverColor: '#1f3a5f',
-  level: 'intro',
-  keywords: [],
-  loan: { available: true },
-  location: { floor: '3F', shelf: 27, side: 'front', slot: 3, distanceFromElevator: 20 },
+  loan: 'available',
+  location: {
+    floor: '3F',
+    shelf: '335',
+    side: 'A',
+    slot: 3,
+    column: 4,
+    position: 'middle',
+    mapElementId: '_3F-335',
+  },
 };
 
 const meta: Meta<typeof ResultRow> = {
@@ -30,10 +37,6 @@ export const Available: Story = {};
 export const OnLoan: Story = {
   args: {
     index: 3,
-    book: {
-      ...book,
-      loan: { available: false, dueDate: '2026-11-21' },
-      location: { ...book.location, slot: undefined },
-    },
+    book: { ...book, loan: 'unavailable', location: null },
   },
 };

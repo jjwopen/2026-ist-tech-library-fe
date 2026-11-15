@@ -1,5 +1,3 @@
-import { Link } from '@tanstack/react-router';
-
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
@@ -26,10 +24,9 @@ export function HomePage() {
         className="pt-7"
         title={t('home.popular')}
         caption={t('home.popularCaption', { month: dayjs().month() + 1 })}
-        action={<Link to="/search">{t('home.viewAll')}</Link>}
       >
         {popular.map(({ rank, book }) => (
-          <BookTile key={book.id} book={book} badge={rank} />
+          <BookTile key={book.title} book={book} badge={rank} />
         ))}
       </BookRail>
 
@@ -37,11 +34,10 @@ export function HomePage() {
         className="pt-6 pb-6"
         title={t('home.newArrivals')}
         caption={t('home.newArrivalsCaption')}
-        action={<Link to="/search">{t('home.viewAll')}</Link>}
       >
         {newArrivals.map(({ arrivedAt, book }) => (
           <BookTile
-            key={book.id}
+            key={book.title}
             book={book}
             badge={dayjs(arrivedAt).format('MM.DD')}
             badgeVariant="date"

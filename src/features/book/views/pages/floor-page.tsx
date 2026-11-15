@@ -9,50 +9,52 @@ import { cn } from '@/common/utils';
 
 import {
   FLOORS,
-  useFloorPlan,
+  useFloorMap,
   useFloorTarget,
   type FloorId,
-  type FloorPlan,
+  type FloorMap as FloorMapData,
 } from '../../viewmodels';
 import { EmptyState } from '../components/empty-state';
 import { FloorMap } from '../components/floor-map';
 import { LocationSheet } from '../components/location-sheet';
 
-/** S3 층 평면도 — bookId가 있으면 찾는 책 위치를, 없으면 둘러보기 */
+/** S3 층 도면 — bookId가 있으면 찾는 책 위치를, 없으면 둘러보기 */
 export function FloorPage({ floor, bookId }: FloorPage.Props) {
-  return bookId ? <TargetFloor floor={floor} bookId={bookId} /> : <BrowseFloor floor={floor} />;
+  return bookId ? (
+    <BookFloor floor={floor} bookId={bookId} />
+  ) : (
+    <BrowseFloor floor={floor ?? '3F'} />
+  );
 }
 
 function BrowseFloor({ floor }: { floor: FloorId }) {
-  const { plan } = useFloorPlan(floor);
+  const { map } = useFloorMap(floor);
 
   return (
-    <FloorLayout floor={floor} plan={plan} bottom={<Footer selected="map" />}>
-      {plan && <FloorMap plan={plan} />}
+    <FloorLayout floor={floor} map={map} bottom={<Footer selected="map" />}>
+      {map && <FloorMap map={map} />}
     </FloorLayout>
   );
 }
 
-function TargetFloor({ floor, bookId }: { floor: FloorId; bookId: string }) {
-  const { plan, book, target, sameShelfCount, recMarkers, showRoute } = useFloorTarget(
-    floor,
-    bookId,
-  );
+function BookFloor({ floor, bookId }: { floor?: FloorId; bookId: string }) {
+  const { book, map, onFloor, target, recShelfIds, sameShelfCount, recMarkers, ...rest } =
+    useFloorTarget(bookId, floor);
 
   return (
     <FloorLayout
-      floor={floor}
+      floor={rest.floor}
       bookId={bookId}
-      plan={plan}
-      bottom={book ? <LocationSheet book={book} /> : <Footer selected="map" />}
+      map={map}
+      bottom={onFloor ? <LocationSheet book={book} /> : <Footer selected="map" />}
     >
-      {plan && (
+      {map && (
         <FloorMap
-          plan={plan}
+          map={map}
           target={target}
+          recShelfIds={recShelfIds}
           sameShelfCount={sameShelfCount}
           recMarkers={recMarkers}
-          showRoute={showRoute}
         />
       )}
     </FloorLayout>
@@ -62,29 +64,27 @@ function TargetFloor({ floor, bookId }: { floor: FloorId; bookId: string }) {
 function FloorLayout({
   floor,
   bookId,
-  plan,
+  map,
   bottom,
   children,
 }: {
   floor: FloorId;
   bookId?: string;
-  plan: FloorPlan | null;
+  map: FloorMapData | null;
   bottom: ReactNode;
   children: ReactNode;
 }) {
   const { t } = useTranslation('book');
 
   const legend = [
-    { swatch: 'bg-accent size-2.5', label: t('tag.target') },
-    { swatch: 'bg-rec size-2.5', label: t('legend.rec') },
-    { swatch: 'bg-accent h-[3px] w-4', label: t('legend.route') },
+    { swatch: 'bg-accent', label: t('tag.target') },
+    { swatch: 'bg-rec', label: t('legend.rec') },
   ];
 
   return (
     <PageShell bottom={bottom}>
       <TopBar>
         <span className="num-lg">{floor}</span>
-        {plan && <span className="text-subtitle">{plan.name}</span>}
       </TopBar>
 
       <nav aria-label={t('floor.tabs')} className="flex gap-2 pt-4 pb-3">
@@ -107,13 +107,13 @@ function FloorLayout({
         })}
       </nav>
 
-      {plan ? (
+      {map ? (
         <>
           {children}
           <ul className="text-meta text-sub flex items-center gap-4 py-3">
             {legend.map(({ swatch, label }) => (
               <li key={label} className="flex items-center gap-1.5">
-                <span className={swatch} />
+                <span className={cn('size-2.5', swatch)} />
                 {label}
               </li>
             ))}
@@ -128,7 +128,7 @@ function FloorLayout({
 
 export namespace FloorPage {
   export type Props = {
-    floor: FloorId;
+    floor?: FloorId;
     bookId?: string;
   };
 }

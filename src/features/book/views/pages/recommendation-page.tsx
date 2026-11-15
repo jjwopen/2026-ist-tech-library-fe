@@ -24,7 +24,7 @@ export function RecommendationPage({ bookId }: RecommendationPage.Props) {
 
       {recommendations.length > 0 ? (
         recommendations.map((recommendation) => (
-          <RecRow key={recommendation.rank} recommendation={recommendation} />
+          <RecRow key={recommendation.rank} recommendation={recommendation} target={target} />
         ))
       ) : (
         <EmptyState>{t('recommendation.empty')}</EmptyState>

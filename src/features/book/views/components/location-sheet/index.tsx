@@ -9,7 +9,7 @@ import { type Book } from '../../../viewmodels';
 import { useBookLabels } from '../../hooks';
 import { LoanStatusMark } from '../loan-status-mark';
 
-/** 평면도 하단 시트 — 찾는 책 요약 + 서가 보기 */
+/** 층 서가맵 하단 시트 — 찾는 책 요약 + 서가 보기 */
 export function LocationSheet({ book, className }: LocationSheet.Props) {
   const { t } = useTranslation('book');
   const labels = useBookLabels();
@@ -21,7 +21,7 @@ export function LocationSheet({ book, className }: LocationSheet.Props) {
         <LoanStatusMark loan={book.loan} />
       </div>
       <h2 className="text-h2">{book.title}</h2>
-      <p className="text-small">{labels.directions(book.location)}</p>
+      {book.location && <p className="text-small">{labels.directions(book.location)}</p>}
       <Link
         to="/books/$bookId/shelf"
         params={{ bookId: book.id }}

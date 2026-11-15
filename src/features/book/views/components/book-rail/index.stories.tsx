@@ -1,20 +1,15 @@
-import { type Book } from '../../../viewmodels';
+import { type HomeBook } from '../../../viewmodels';
 import { BookTile } from '../book-tile';
 
 import { BookRail } from '.';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-const book: Book = {
-  id: 'b-0193',
+const book: HomeBook = {
   title: '밑바닥부터 시작하는 딥러닝',
-  authors: '사이토 고키',
-  callNumber: 'Q325.5 .S35 2017',
   coverColor: '#1f3a5f',
-  level: 'intro',
-  keywords: [],
-  loan: { available: true },
-  location: { floor: '3F', shelf: 27, side: 'front', slot: 3, distanceFromElevator: 20 },
+  floor: '3F',
+  shelf: '27',
 };
 
 const meta: Meta<typeof BookRail> = {

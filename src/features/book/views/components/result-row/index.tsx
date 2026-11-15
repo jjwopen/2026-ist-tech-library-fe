@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
 import { ICONS } from '@/common/assets';
-import { SvgIcon, Tag } from '@/common/components/ui';
+import { SvgIcon } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
 import { type Book } from '../../../viewmodels';
@@ -10,6 +12,7 @@ import { ViewLocationLink } from '../view-location-link';
 
 /** 검색 결과 한 줄 (Figma ResultRow) */
 export function ResultRow({ index, book, className }: ResultRow.Props) {
+  const { t } = useTranslation('book');
   const labels = useBookLabels();
 
   return (
@@ -20,19 +23,16 @@ export function ResultRow({ index, book, className }: ResultRow.Props) {
         <div className="flex flex-col gap-0.5">
           <h3 className="text-base/[22px] font-bold tracking-[-0.01em]">{book.title}</h3>
           <p className="text-meta text-sub">
-            {book.authors} · {book.callNumber}
+            {[book.authors, book.callNumber].filter(Boolean).join(' · ')}
           </p>
         </div>
-        <p className="text-small flex items-center gap-1.5">
+        <p className={cn('text-small flex items-center gap-1.5', !book.location && 'text-sub')}>
           <SvgIcon src={ICONS.pin} size={16} />
-          {labels.location(book.location)}
+          {book.location ? labels.location(book.location) : t('location.unknown')}
         </p>
         <div className="flex min-h-11 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LoanStatusMark loan={book.loan} />
-            {book.level && <Tag>{labels.level(book.level)}</Tag>}
-          </div>
-          {book.loan.available && <ViewLocationLink book={book} />}
+          <LoanStatusMark loan={book.loan} />
+          {book.location && <ViewLocationLink book={book} />}
         </div>
       </div>
     </article>

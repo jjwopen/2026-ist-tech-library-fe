@@ -1,4 +1,4 @@
-import { useFloorPlan, useFloorTarget } from '../../../viewmodels';
+import { useFloorMap, useFloorTarget } from '../../../viewmodels';
 
 import { FloorMap } from '.';
 
@@ -13,15 +13,28 @@ const meta: Meta<typeof FloorMap> = {
 export default meta;
 type Story = StoryObj<typeof FloorMap>;
 
-function TargetPreview() {
-  const { plan, book: _book, ...rest } = useFloorTarget('3F', 'b-0193');
-  return <div className="max-w-[350px]">{plan && <FloorMap plan={plan} {...rest} />}</div>;
-}
-
 function BrowsePreview() {
-  const { plan } = useFloorPlan('3F');
-  return <div className="max-w-[350px]">{plan && <FloorMap plan={plan} />}</div>;
+  const { map } = useFloorMap('3F');
+  return <div className="max-w-[350px]">{map && <FloorMap map={map} />}</div>;
 }
 
-export const WithTarget: Story = { render: () => <TargetPreview /> };
+function TargetPreview() {
+  const { map, target, recShelfIds, sameShelfCount, recMarkers } =
+    useFloorTarget('alma991003491172303286');
+  return (
+    <div className="max-w-[350px]">
+      {map && (
+        <FloorMap
+          map={map}
+          target={target}
+          recShelfIds={recShelfIds}
+          sameShelfCount={sameShelfCount}
+          recMarkers={recMarkers}
+        />
+      )}
+    </div>
+  );
+}
+
 export const Browse: Story = { render: () => <BrowsePreview /> };
+export const WithTarget: Story = { render: () => <TargetPreview /> };

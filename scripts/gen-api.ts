@@ -12,12 +12,9 @@ async function generateApiSchema() {
   const swaggerPassword = Bun.env.SWAGGER_PASSWORD;
   const swaggerUrl = Bun.env.SWAGGER_URL;
 
-  // 환경변수가 없는 환경(Vercel 등)에서는 생성을 건너뛰고 빌드를 계속함.
-  // 생성된 스키마를 import하는 코드가 있다면 이후 tsc 단계에서 실패하므로 누락을 놓치지 않음
-  if (!swaggerUser || !swaggerPassword || !swaggerUrl) {
-    console.warn(
-      'Skipping API schema generation: SWAGGER_USER, SWAGGER_PASSWORD and SWAGGER_URL must be set in .env file',
-    );
+  // SWAGGER_URL이 없는 환경(Vercel 등)에서는 저장소에 커밋된 스키마를 그대로 사용
+  if (!swaggerUrl) {
+    console.warn('Skipping API schema generation: SWAGGER_URL is not set (using committed schema)');
     return;
   }
 
@@ -25,10 +22,14 @@ async function generateApiSchema() {
 
   try {
     console.log('Downloading Swagger JSON...');
+    // 공개 문서면 인증 없이 요청, SWAGGER_USER/PASSWORD가 있으면 Basic 인증
     const response = await fetch(swaggerUrl, {
-      headers: {
-        Authorization: `Basic ${Buffer.from(`${swaggerUser}:${swaggerPassword}`).toString('base64')}`,
-      },
+      headers:
+        swaggerUser && swaggerPassword
+          ? {
+              Authorization: `Basic ${Buffer.from(`${swaggerUser}:${swaggerPassword}`).toString('base64')}`,
+            }
+          : undefined,
     });
 
     if (!response.ok) {

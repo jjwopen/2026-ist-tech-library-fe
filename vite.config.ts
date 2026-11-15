@@ -26,11 +26,11 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
+        // API 스키마 경로에 /api 접두사가 포함돼 있어 경로를 그대로 전달
         '/api': {
-          target: env.VITE_API_BASE_URL,
+          target: env.VITE_API_BASE_URL || 'https://postech-library-api.onrender.com',
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
           configure: (proxy, _options) => {
             proxy.on('proxyReq', (proxyReq) => {
               proxyReq.removeHeader('origin');

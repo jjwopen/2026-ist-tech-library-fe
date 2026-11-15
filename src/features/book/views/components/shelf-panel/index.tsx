@@ -5,15 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, buttonClass, Tag } from '@/common/components/ui';
 import { cn } from '@/common/utils';
 
-import { type Recommendation, type ShelfView } from '../../../viewmodels';
-import { useBookLabels } from '../../hooks';
+import { type Book, type Recommendation } from '../../../viewmodels';
 import { LoanStatusMark } from '../loan-status-mark';
 
 /** 서가 정면 하단 패널 — 기본은 찾는 책, 추천 책을 누르면 추천 정보 */
-export function ShelfPanel({ shelf, selected, onClearSelection, className }: ShelfPanel.Props) {
+export function ShelfPanel({ book, selected, onClearSelection, className }: ShelfPanel.Props) {
   const { t } = useTranslation('book');
-  const labels = useBookLabels();
-  const { target, neighbors } = shelf;
 
   return (
     <section className={cn('border-ink flex flex-col gap-2 border-t-2 pt-3.5', className)}>
@@ -21,17 +18,19 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
         <>
           <div className="flex items-center justify-between">
             <Tag variant="rec">
-              {t('shelf.recTag', { rank: selected.rank, kind: labels.recKind(selected.kind) })}
+              {selected.reasons[0]
+                ? t('shelf.recTag', { rank: selected.rank, kind: selected.reasons[0] })
+                : t('shelf.recTagRankOnly', { rank: selected.rank })}
             </Tag>
-            {selected.book.location.slot && (
+            {selected.book?.location && (
               <span className="text-meta text-rec font-bold">
                 {t('shelf.slot', { slot: selected.book.location.slot })}
               </span>
             )}
           </div>
-          <h2 className="text-h2">{selected.book.title}</h2>
-          <p className="text-meta text-sub">
-            {selected.book.authors} · {selected.reason}
+          <h2 className="text-h2">{selected.title}</h2>
+          <p className="text-meta text-sub line-clamp-2">
+            {[selected.authors, selected.explanation].filter(Boolean).join(' · ')}
           </p>
           <div className="flex gap-2 pt-1">
             <Button variant="outline" size="lg" className="flex-1" onClick={onClearSelection}>
@@ -39,7 +38,7 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
             </Button>
             <Link
               to="/books/$bookId/recommendations"
-              params={{ bookId: target.id }}
+              params={{ bookId: book.id }}
               className={buttonClass({ variant: 'rec', size: 'lg', className: 'flex-1' })}
             >
               {t('shelf.recList')}
@@ -50,22 +49,13 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
         <>
           <div className="flex items-center justify-between">
             <Tag variant="accent">{t('tag.target')}</Tag>
-            <LoanStatusMark loan={target.loan} />
+            <LoanStatusMark loan={book.loan} />
           </div>
-          <h2 className="text-h2">{target.title}</h2>
+          <h2 className="text-h2">{book.title}</h2>
           <p className="text-meta text-sub">
-            {target.authors} · {target.callNumber}
+            {[book.authors, book.callNumber].filter(Boolean).join(' · ')}
           </p>
-          {neighbors && (
-            <p className="text-meta text-sub flex flex-wrap items-center gap-1.5">
-              {t('shelf.callOrder')}
-              <Tag>{neighbors.prev}</Tag>
-              <span aria-hidden>→</span>
-              <Tag variant="accent">{t('shelf.thisBook')}</Tag>
-              <span aria-hidden>→</span>
-              <Tag>{neighbors.next}</Tag>
-            </p>
-          )}
+          <p className="text-meta text-sub">{t('shelf.estimatedNote')}</p>
         </>
       )}
     </section>
@@ -74,7 +64,7 @@ export function ShelfPanel({ shelf, selected, onClearSelection, className }: She
 
 export namespace ShelfPanel {
   export type Props = {
-    shelf: ShelfView;
+    book: Book;
     selected: Recommendation | null;
     onClearSelection: () => void;
     className?: string;

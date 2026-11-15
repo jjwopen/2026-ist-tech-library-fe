@@ -1,73 +1,52 @@
-import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 
-import { type Book, type Recommendation } from '../../viewmodels';
-
-type Location = Book['location'];
+import { type Book, type BookLocation, type Recommendation } from '../../viewmodels';
 
 /** 책 데이터를 화면 문구로 바꾸는 포맷터 모음 */
 export function useBookLabels() {
   const { t } = useTranslation('book');
 
-  // 키를 상수 맵으로 빼면 i18next-cli가 사용 중인 키로 인식하지 못해 추출 시 삭제됨
-  const side = (value: Location['side']) =>
-    value === 'front' ? t('location.front') : t('location.back');
-
-  const recKind = (kind: Recommendation['kind']) => {
-    switch (kind) {
-      case 'intro':
-        return t('level.intro');
-      case 'advanced':
-        return t('level.advanced');
-      case 'borrowed-together':
-        return t('recommendation.borrowedTogether');
-      case 'outside-major':
-        return t('recommendation.outsideMajor');
-    }
-  };
-
   return {
     /** 목록 순번 "01" */
     index: (value: number) => String(value).padStart(2, '0'),
 
-    /** "3F · 27번 서가" / "3F · 27번 서가 · 3칸" */
-    location: ({ floor, shelf, slot }: Location, withSlot = true) =>
-      withSlot && slot
-        ? t('location.shelfSlot', { floor, shelf, slot })
-        : t('location.shelf', { floor, shelf }),
+    /** "3F · 335번 서가" / "3F · 335번 서가 · 3칸" */
+    location: (location: Pick<BookLocation, 'floor' | 'shelf'> & { slot?: number }) =>
+      location.slot
+        ? t('location.shelfSlot', {
+            floor: location.floor,
+            shelf: location.shelf,
+            slot: location.slot,
+          })
+        : t('location.shelf', { floor: location.floor, shelf: location.shelf }),
 
-    /** "27번 서가 앞면 3칸 · 엘리베이터에서 약 20m" */
-    directions: ({ shelf, side: value, slot, distanceFromElevator: distance }: Location) =>
-      slot
-        ? t('location.directionsSlot', { shelf, side: side(value), slot, distance })
-        : t('location.directions', { shelf, side: side(value), distance }),
+    /** "335번 서가 A면 3칸 부근" */
+    directions: ({ shelf, side, slot }: BookLocation) =>
+      t('location.directions', { shelf, side, slot }),
 
-    side,
-
-    position: (value: Location['position']) => {
+    position: (value: BookLocation['position']) => {
       if (value === 'left') return t('location.left');
       if (value === 'right') return t('location.right');
       return t('location.middle');
     },
 
-    level: (value: NonNullable<Book['level']>) => recKind(value),
+    loan: (loan: Book['loan']) => {
+      if (loan === 'available') return t('status.available');
+      if (loan === 'unavailable') return t('status.unavailable');
+      return t('status.unknown');
+    },
 
-    loan: (loan: Book['loan']) =>
-      loan.available
-        ? t('status.available')
-        : t('status.onLoan', { date: dayjs(loan.dueDate).format('M/D') }),
-
-    recKind,
-
-    recWhere: (where: Recommendation['where']) => {
-      switch (where.type) {
-        case 'same-shelf':
-          return t('recommendation.sameShelf', { slot: where.slot });
-        case 'nearby':
-          return t('recommendation.nearby', { shelf: where.shelf, distance: where.distance });
-        case 'adjacent':
-          return t('recommendation.adjacent', { shelf: where.shelf });
-      }
+    /** 추천 책 위치 — 찾는 책과 같은 서가·면이면 칸만 */
+    recWhere: (rec: Recommendation, target: Book) => {
+      const location = rec.book?.location;
+      if (!location) return t('recommendation.notInLibrary');
+      const sameShelf =
+        target.location?.floor === location.floor &&
+        target.location.shelf === location.shelf &&
+        target.location.side === location.side;
+      return sameShelf
+        ? t('recommendation.sameShelf', { slot: location.slot })
+        : t('location.shelf', { floor: location.floor, shelf: location.shelf });
     },
   };
 }

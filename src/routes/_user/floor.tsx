@@ -13,6 +13,6 @@ export const Route = createFileRoute('/_user/floor')({
 });
 
 function RouteComponent() {
-  const { floor = '3F', bookId } = Route.useSearch();
+  const { floor, bookId } = Route.useSearch();
   return <FloorPage floor={floor} bookId={bookId} />;
 }

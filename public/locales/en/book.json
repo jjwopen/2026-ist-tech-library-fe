@@ -3,16 +3,12 @@
     "viewLocation": "Locate →"
   },
   "floor": {
-    "elevator": "EV",
-    "mapLabel": "{{floor}} floor plan",
-    "north": "N",
-    "notReady": "The floor plan for this floor is coming soon",
-    "returnKiosk": "Return",
-    "stairs": "Stairs",
-    "start": "Start",
-    "studyRoom": "Group study rooms",
+    "mapLabel": "Library shelf map",
+    "notReady": "The map for this floor is coming soon",
     "tabs": "Select floor",
-    "viewShelf": "View shelf →"
+    "viewShelf": "View shelf →",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Show all"
   },
   "home": {
     "library": "POSTECH Park Tae-Joon Library",
@@ -20,63 +16,54 @@
     "newArrivalsCaption": "This week",
     "popular": "Popular this month",
     "popularCaption": "Month {{month, number}} · Most borrowed",
-    "title": "Find a book",
-    "viewAll": "All →"
+    "title": "Find a book"
   },
   "legend": {
     "high": "High",
     "low": "Low",
-    "rec": "Recommended",
-    "route": "Route"
-  },
-  "level": {
-    "advanced": "Advanced",
-    "intro": "Intro"
+    "rec": "Recommended"
   },
   "location": {
-    "back": "back",
-    "directions": "Shelf {{shelf, number}} {{side}} · about {{distance, number}}m from the elevator",
-    "directionsSlot": "Shelf {{shelf, number}} {{side}}, tier {{slot, number}} · about {{distance, number}}m from the elevator",
-    "front": "front",
+    "directions": "Near shelf {{shelf}}, side {{side}}, tier {{slot, number}}",
     "left": "left",
     "middle": "middle",
     "right": "right",
-    "shelf": "{{floor}} · Shelf {{shelf, number}}",
-    "shelfSlot": "{{floor}} · Shelf {{shelf, number}} · Tier {{slot, number}}"
+    "shelf": "{{floor}} · Shelf {{shelf}}",
+    "shelfSlot": "{{floor}} · Shelf {{shelf}} · Tier {{slot, number}}",
+    "unknown": "Location unavailable"
   },
   "recommendation": {
-    "adjacent": "Shelf {{shelf, number}} · right next door",
     "basis": "Based on {{title}}",
-    "borrowedTogether": "Borrowed together",
-    "empty": "No recommendations yet",
-    "nearby": "Shelf {{shelf, number}} · about {{distance, number}}m",
-    "outsideMajor": "Outside major",
+    "empty": "No recommendations for this book yet",
+    "notInLibrary": "Not in the library",
     "sameShelf": "Same shelf, tier {{slot, number}}",
     "title": "Recommended"
   },
   "search": {
     "empty": "No results found",
     "placeholder": "Title, author, subject",
+    "prompt": "Enter a title or author to search",
     "result": "Results",
     "resultCount": "{{n, number}} books",
     "submit": "Search"
   },
   "shelf": {
-    "callOrder": "Call number order",
-    "label": "Shelf {{shelf, number}}",
-    "notReady": "Shelf view for this shelf is coming soon",
+    "estimatedNote": "Estimated from the call number, so the actual spot may differ slightly",
+    "label": "Shelf {{shelf}}",
+    "notReady": "This item's location can't be estimated",
     "recCount": "{{n, number}} picks",
     "recList": "All picks →",
     "recSpine": "Recommended book {{rank, number}}",
     "recTag": "Pick {{rank, number}} · {{kind}}",
+    "recTagRankOnly": "Pick {{rank, number}}",
     "slot": "Tier {{slot, number}}",
-    "thisBook": "This book",
-    "titleSuffix": "· {{side}}",
+    "titleSuffix": "· Side {{side}}",
     "viewTarget": "Back to my book"
   },
   "status": {
     "available": "Available",
-    "onLoan": "On loan · due {{date}}"
+    "unavailable": "Unavailable",
+    "unknown": "Status unknown"
   },
   "tag": {
     "target": "Your book"
