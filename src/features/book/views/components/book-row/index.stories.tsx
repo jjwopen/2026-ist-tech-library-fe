@@ -23,6 +23,6 @@ export const Similar: Story = {
     title: 'Do it! 딥러닝 입문',
     color: '#C9A23F',
     why: '그림으로 개념부터 잡고 싶을 때',
-    meta: '335번 서가 · 앞면 3단 6칸',
+    meta: '335번 책장 · 앞면 3단 6칸',
   },
 };

@@ -38,6 +38,6 @@ export function mockIntro(target: Book): BookIntro {
     synopsis:
       target.description ??
       `${by}『${target.title}』. 도서관 소장 정보를 바탕으로 꽂혀 있을 자리를 알려 드려요. 책 소개는 준비 중이라 예시 문구로 채웠어요.`,
-    recommendedFor: ['이 분야를 처음 공부할 때', '같은 서가의 비슷한 책과 함께 볼 때'],
+    recommendedFor: ['이 분야를 처음 공부할 때', '같은 책장의 비슷한 책과 함께 볼 때'],
   };
 }

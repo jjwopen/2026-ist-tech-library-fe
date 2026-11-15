@@ -25,7 +25,7 @@ export const Popular: Story = {
           title={`책 ${i + 1}`}
           color={color}
           over={<b>{i + 1}</b>}
-          meta="335번 서가"
+          meta="335번 책장"
         />
       ))}
     </Carousel>

@@ -19,7 +19,7 @@ const meta: Meta<typeof BookCard> = {
 export default meta;
 type Story = StoryObj<typeof BookCard>;
 
-export const Rank: Story = { args: { over: <b>1</b>, meta: '335번 서가' } };
+export const Rank: Story = { args: { over: <b>1</b>, meta: '335번 책장' } };
 export const Result: Story = {
   args: { meta: '앞면 3단 5칸', status: <BookStatus label="대출 가능" available /> },
 };
