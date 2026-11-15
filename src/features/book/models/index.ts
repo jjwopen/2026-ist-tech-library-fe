@@ -1,13 +1,18 @@
 export { bookApi } from './book-api';
 export {
   FLOORS,
+  SHELF_COLUMNS,
+  SHELF_ROWS,
   type Book,
+  type BookIntro,
+  type BookLocation,
   type FloorId,
-  type FloorPlan,
-  type HeatLevel,
+  type FloorMap,
+  type FloorShelf,
+  type HomeBook,
+  type LoanStatus,
   type NewArrival,
   type PopularBook,
   type Recommendation,
-  type ShelfSpine,
-  type ShelfView,
+  type SearchResult,
 } from './types';

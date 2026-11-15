@@ -1,84 +1,91 @@
 {
-  "action": {
-    "viewLocation": "Locate →"
-  },
-  "floor": {
-    "elevator": "EV",
-    "mapLabel": "{{floor}} floor plan",
-    "north": "N",
-    "notReady": "The floor plan for this floor is coming soon",
-    "returnKiosk": "Return",
-    "stairs": "Stairs",
-    "start": "Start",
-    "studyRoom": "Group study rooms",
-    "tabs": "Select floor",
-    "viewShelf": "View shelf →"
+  "face": {
+    "back": "Back",
+    "front": "Front"
   },
   "home": {
-    "library": "POSTECH Park Tae-Joon Library",
+    "lead1": "Find the book",
+    "lead2": "you want to read!",
     "newArrivals": "New arrivals",
     "newArrivalsCaption": "This week",
+    "openBook": "Open {{title}}",
+    "placeholder": "e.g. Deep learning",
     "popular": "Popular this month",
     "popularCaption": "Month {{month, number}} · Most borrowed",
-    "title": "Find a book",
-    "viewAll": "All →"
+    "popularQueries": "Popular searches",
+    "pressCursor": "Hold · Details",
+    "pressHint": "Press and hold a cover to see its details",
+    "searchLabel": "Search",
+    "submit": "Search",
+    "tagline": "Your library guide, right down to the shelf",
+    "toSearch": "Go to search"
   },
-  "legend": {
-    "high": "High",
-    "low": "Low",
-    "rec": "Recommended",
-    "route": "Route"
+  "info": {
+    "callNumber": "Call no.",
+    "intro": "About",
+    "openSimilar": "Open {{title}}",
+    "place": "Shelf",
+    "recommendedFor": "Good for",
+    "similar": "Similar books",
+    "similarEmpty": "No similar books yet",
+    "similarLoading": "Picking similar books…",
+    "spot": "Spot",
+    "status": "Status"
   },
-  "level": {
-    "advanced": "Advanced",
-    "intro": "Intro"
+  "loading": {
+    "step1": "Looking through the shelves",
+    "step2": "Lining up call numbers",
+    "step3": "Picking books to read with it",
+    "title": "Searching"
   },
   "location": {
-    "back": "back",
-    "directions": "Shelf {{shelf, number}} {{side}} · about {{distance, number}}m from the elevator",
-    "directionsSlot": "Shelf {{shelf, number}} {{side}}, tier {{slot, number}} · about {{distance, number}}m from the elevator",
-    "front": "front",
-    "left": "left",
-    "middle": "middle",
-    "right": "right",
-    "shelf": "{{floor}} · Shelf {{shelf, number}}",
-    "shelfSlot": "{{floor}} · Shelf {{shelf, number}} · Tier {{slot, number}}"
-  },
-  "recommendation": {
-    "adjacent": "Shelf {{shelf, number}} · right next door",
-    "basis": "Based on {{title}}",
-    "borrowedTogether": "Borrowed together",
-    "empty": "No recommendations yet",
-    "nearby": "Shelf {{shelf, number}} · about {{distance, number}}m",
-    "outsideMajor": "Outside major",
-    "sameShelf": "Same shelf, tier {{slot, number}}",
-    "title": "Recommended"
+    "closeNote": "Close recommendation",
+    "elevationLabel": "Shelf {{shelf}}, {{rows, number}} tiers × {{columns, number}} bays",
+    "faceLabel": "Side",
+    "faces": "Shelf side",
+    "floor": "{{floor}}F",
+    "floorLabel": "Floor",
+    "here": "Here",
+    "place": "Shelf {{shelf}} · {{face}} {{spot}}",
+    "planLabel": "{{floor}} floor plan",
+    "planTitle": "{{floor}} floor plan",
+    "shelf": "Shelf {{shelf}}",
+    "similarOnShelf": "{{title}}, similar book",
+    "spot": "tier {{slot, number}}, bay {{column, number}}",
+    "spotLabel": "Tier · Bay",
+    "unknown": "Location unavailable"
   },
   "search": {
-    "empty": "No results found",
-    "placeholder": "Title, author, subject",
-    "result": "Results",
-    "resultCount": "{{n, number}} books",
-    "submit": "Search"
+    "again": "Search again",
+    "count": "{{n, number}} books",
+    "countMore": "{{n, number}}+ books",
+    "emptyQuery": "What are you looking for?",
+    "errorBody": "We couldn't reach the library catalog. Please try again in a moment.",
+    "errorTitle": "Search is unavailable right now",
+    "home": "Home",
+    "noneBody": "The library may not have it, or the search words may differ.",
+    "noneTitle": "No books found",
+    "pressHint": "Press and hold a cover for details",
+    "retry": "Try again",
+    "similar": "Read with these",
+    "similarBasis": "Based on {{title}}",
+    "subOneShelf": "{{books}} · all on {{floor}}, shelf {{shelf}}",
+    "subShelves": "{{books}} · across {{shelves, number}} shelves",
+    "tipAuthor": "Try the author's name",
+    "tipShorter": "Try shorter words",
+    "tipSpacing": "Try different spacing"
   },
-  "shelf": {
-    "callOrder": "Call number order",
-    "label": "Shelf {{shelf, number}}",
-    "notReady": "Shelf view for this shelf is coming soon",
-    "recCount": "{{n, number}} picks",
-    "recList": "All picks →",
-    "recSpine": "Recommended book {{rank, number}}",
-    "recTag": "Pick {{rank, number}} · {{kind}}",
-    "slot": "Tier {{slot, number}}",
-    "thisBook": "This book",
-    "titleSuffix": "· {{side}}",
-    "viewTarget": "Back to my book"
+  "sheet": {
+    "close": "Close",
+    "finding": "Finding this book in the library…",
+    "label": "Book details",
+    "missing": "We couldn't find this book in the library",
+    "toInfo": "Back to book details",
+    "toLocation": "Find this book"
   },
   "status": {
     "available": "Available",
-    "onLoan": "On loan · due {{date}}"
-  },
-  "tag": {
-    "target": "Your book"
+    "unavailable": "On loan",
+    "unknown": "Status unknown"
   }
 }

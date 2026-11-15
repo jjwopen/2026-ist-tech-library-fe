@@ -9,9 +9,12 @@ dist-ssr
 .wrangler
 .output
 .vinxi
+.idea
 __unconfig*
 todos.json
 
 src/routeTree.gen.ts
 src/@types/*.ts
+# 빌드 환경에 Swagger 접근 정보가 없어도 타입 검사가 되도록 API 스키마는 커밋
+!src/@types/api-schema.ts
 !src/@types/string.d.ts

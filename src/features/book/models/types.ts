@@ -2,104 +2,94 @@ export const FLOORS = ['2F', '3F', '4F', '5F'] as const;
 
 export type FloorId = (typeof FLOORS)[number];
 
-export type BookLevel = 'intro' | 'advanced';
+/** 층 도면 — 저장소의 도면 SVG를 정리한 결과 */
+export type FloorMap = {
+  floor: FloorId;
+  viewBox: { x: number; y: number; width: number; height: number };
+  /** 정리된 SVG 자식 요소 마크업 (서가 요소에는 `data-shelf`=도면 요소 ID) */
+  markup: string;
+  /** 도면 요소 ID → 마커를 올릴 중심 좌표 (선으로 그린 서가는 양 끝점도) */
+  shelves: Record<string, FloorShelf>;
+};
+
+export type FloorShelf = {
+  x: number;
+  y: number;
+  /** 선 서가의 양 끝점 [x1, y1, x2, y2] — 평행 투시로 세워 그릴 때 사용 */
+  segment?: [number, number, number, number];
+};
 
 /** 서가 한 칸 안에서의 가로 위치 */
 export type SlotPosition = 'left' | 'middle' | 'right';
 
+/** 서가 한 면의 칸 구성 (행 × 열) */
+export const SHELF_ROWS = 5;
+export const SHELF_COLUMNS = 7;
+
+/** 청구기호로 추정한 소장 위치 */
 export type BookLocation = {
   floor: FloorId;
-  /** 서가 번호 (e.g. 27번 서가) */
-  shelf: number;
-  side: 'front' | 'back';
-  /** 위에서부터 몇 번째 칸인지. 정확한 칸을 모르면 비어 있음 */
-  slot?: number;
-  position?: SlotPosition;
-  /** 엘리베이터로부터의 거리 (m) */
-  distanceFromElevator: number;
+  /** 서가 번호 (e.g. "335") */
+  shelf: string;
+  /** 서가 면 — 청구기호 앞 절반 A, 뒤 절반 B */
+  side: 'A' | 'B';
+  /** 위에서부터 몇 번째 칸(행)인지 (1~5) */
+  slot: number;
+  /** 왼쪽부터 몇 번째 열인지 (1~7) */
+  column: number;
+  position: SlotPosition;
+  /** 층 도면에서 이 서가를 가리키는 요소 ID (e.g. "_3F-335") */
+  mapElementId: string | null;
 };
 
-export type LoanStatus = { available: true } | { available: false; dueDate: string };
+export type LoanStatus = 'available' | 'unavailable' | 'unknown';
 
 export type Book = {
+  /** 도서관 레코드 ID (e.g. alma991000688189703286) */
   id: string;
   title: string;
   authors: string;
-  callNumber: string;
-  /** 표지 대표색 */
+  isbn: string | null;
+  callNumber: string | null;
+  publisher: string | null;
+  year: string | null;
+  /** 도서관이 제공하는 책 소개 (없으면 null) */
+  description: string | null;
+  /** 표지 이미지 — 없으면 대표색으로 그린 표지 */
+  coverUrl: string | null;
+  /** 표지 대표색 — 표지 이미지가 없을 때와 책 두께 단면에 사용 */
   coverColor: string;
-  level?: BookLevel;
-  keywords: string[];
   loan: LoanStatus;
-  location: BookLocation;
+  /** 위치를 추정할 수 없는 자료면 null */
+  location: BookLocation | null;
 };
 
-export type PopularBook = { rank: number; book: Book };
+/** 검색 결과 — 서버가 전체 권수를 주지 않아 다음 쪽이 있는지만 앎 */
+export type SearchResult = { books: Book[]; hasMore: boolean };
 
-export type NewArrival = { arrivedAt: string; book: Book };
+/** 책 소개 · 이런 분께 권해요 — API가 없어 목업 문구 사용 */
+export type BookIntro = { synopsis: string; recommendedFor: string[] };
 
-export type RecommendationKind = 'intro' | 'advanced' | 'borrowed-together' | 'outside-major';
+/** 홈 목록용 책 — API가 없어 목업 데이터 사용 */
+export type HomeBook = {
+  title: string;
+  coverColor: string;
+  floor: FloorId;
+  shelf: string;
+};
 
-export type RecommendationWhere =
-  | { type: 'same-shelf'; slot: number }
-  | { type: 'nearby'; shelf: number; distance: number }
-  | { type: 'adjacent'; shelf: number };
+export type PopularBook = { rank: number; book: HomeBook };
+
+export type NewArrival = { arrivedAt: string; book: HomeBook };
 
 export type Recommendation = {
   rank: number;
-  kind: RecommendationKind;
-  /** 추천 이유 한 줄 */
-  reason: string;
-  where: RecommendationWhere;
-  book: Book;
-};
-
-/* ---------- 층 평면도 ---------- */
-
-/** 평면도 좌표계는 350 × 380 기준 px */
-export type FloorPlanColumn = {
-  no: number;
-  /** 청구기호 범위 (e.g. A–H) */
-  range: string;
-  x: number;
-};
-
-export type FloorPlan = {
-  floor: FloorId;
-  name: string;
-  width: number;
-  height: number;
-  columns: FloorPlanColumn[];
-  /** 서가 번호 → 평면도 위 중심 좌표 */
-  shelves: Record<number, { column: number; x: number; y: number }>;
-  /** 출발점에서 해당 서가까지의 경로 그림이 있는 서가 */
-  routedShelves: number[];
-};
-
-/* ---------- 서가 정면 ---------- */
-
-export type ShelfSpine = {
-  width: number;
-  height: number;
-  color: string;
-  /** 책등 세로 글자 */
-  label?: string;
-  /** 상단 두 줄 띠 */
-  band?: boolean;
-  /** 추천 책이면 추천 순위 */
-  recRank?: number;
-  bookId?: string;
-};
-
-export type HeatLevel = 'high' | 'mid' | 'low';
-
-export type ShelfView = {
-  shelf: number;
-  side: 'front' | 'back';
-  rows: ShelfSpine[][];
-  /** 찾는 책이 꽂혀 있을 가능성 구간 — 찾는 책 칸 안의 x 오프셋(px)부터 */
-  heat: { offset: number; segments: { width: number; level: HeatLevel }[] };
-  target: Book;
-  /** 청구기호 순서상 앞·뒤 책 */
-  neighbors?: { prev: string; next: string };
+  title: string;
+  authors: string;
+  /** 추천 설명 한두 문장 */
+  explanation: string;
+  coverUrl: string | null;
+  coverColor: string;
+  /** 도서관에 소장된 경우의 책 정보 */
+  book: Book | null;
 };
