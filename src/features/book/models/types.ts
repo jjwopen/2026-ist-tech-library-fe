@@ -73,6 +73,8 @@ export type BookIntro = { synopsis: string; recommendedFor: string[] };
 /** 홈 목록용 책 — API가 없어 목업 데이터 사용 */
 export type HomeBook = {
   title: string;
+  /** 같은 제목으로 검색한 소장 도서의 표지 — 찾는 중이거나 없으면 null */
+  coverUrl?: string | null;
   coverColor: string;
   floor: FloorId;
   shelf: string;
